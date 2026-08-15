@@ -123,9 +123,9 @@ def main():
     shutil.copyfile("node_modules/leaflet/dist/leaflet.css", os.path.join(LIB_DIR, "leaflet.css"))
 
     site_html = build(src, for_site=True)
-    open(os.path.join(SITE, "index.html"), "w", encoding="utf-8").write(site_html)
+    open(os.path.join(SITE, "index.html"), "w", encoding="utf-8", newline="\n").write(site_html)
 
-    open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8").write(
+    open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8", newline="\n").write(
         "User-agent: *\nDisallow: /\n" if NOINDEX else "User-agent: *\nAllow: /\n")
     # stops GitHub Pages running the files through Jekyll
     open(os.path.join(SITE, ".nojekyll"), "w").close()
@@ -133,7 +133,7 @@ def main():
     # ---- the single file ----
     os.makedirs(DIST, exist_ok=True)
     one = build(src, for_site=False)
-    open(os.path.join(DIST, "Valentine_Kavanagh_Family_History.html"), "w", encoding="utf-8").write(one)
+    open(os.path.join(DIST, "Valentine_Kavanagh_Family_History.html"), "w", encoding="utf-8", newline="\n").write(one)
 
     imgbytes = sum(os.path.getsize(os.path.join(RECORDS_DIR, k + ".jpg")) for k in src["keys"])
     print("site/index.html                %6.1f KB  (first load)" % (len(site_html.encode()) / 1024))
