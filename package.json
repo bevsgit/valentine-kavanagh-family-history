@@ -1,0 +1,14 @@
+{
+  "name": "valentine-kavanagh-family-history",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A family history of the Valentine and Kavanagh families of Dublin and Cumbernauld, 1842-1958.",
+  "scripts": {
+    "build": "python3 build.py",
+    "check": "node check.js",
+    "serve": "python3 -m http.server 8000 --directory site"
+  },
+  "dependencies": {
+    "leaflet": "1.9.4"
+  }
+}

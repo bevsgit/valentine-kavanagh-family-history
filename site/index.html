@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Valentine &amp; Kavanagh Families of Dublin &amp; Cumbernauld</title>
+<meta name="description" content="Four generations of a Dublin bookbinding family, 1842-1958 - a clickable family tree, timeline, mapped addresses and 32 original parish, civil and census records.">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Valentine & Kavanagh Families of Dublin & Cumbernauld">
+<meta property="og:description" content="Four generations of a Dublin bookbinding family, 1842-1958 - a clickable family tree, timeline, mapped addresses and 32 original parish, civil and census records.">
+<meta property="og:image" content="assets/social.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="assets/lib/leaflet.css">
+<style>
+:root{
+  --paper:#f4efe4; --card:#fffdf7; --ink:#25282d; --muted:#6f675a; --faint:#948a79;
+  --rule:#ddd2bd; --accent:#8c5a2b; --accent2:#3f6b57; --accent3:#5a4a7a;
+  --ok:#3c6b4f; --maybe:#a3711b; --no:#9a3f3f;
+  --shadow:0 1px 2px rgba(60,45,25,.06),0 6px 20px rgba(60,45,25,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(circle at 20% 30%,rgba(140,90,43,.05),transparent 45%),radial-gradient(circle at 80% 70%,rgba(63,107,87,.05),transparent 45%)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+a{color:var(--accent);text-decoration-color:rgba(140,90,43,.35);text-underline-offset:2px}
+a:hover{text-decoration-color:var(--accent)}
+h1,h2,h3,h4{line-height:1.2;margin:0;font-weight:600;letter-spacing:-.01em}
+.small{font-size:13.5px}
+.mono{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+
+/* header */
+header{padding:56px 0 26px;text-align:center;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#faf6ed,rgba(250,246,237,0))}
+.eyebrow{font:12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+h1{font-size:clamp(30px,5.2vw,50px);margin-bottom:14px}
+h1 em{font-style:normal;color:var(--accent)}
+.dek{max-width:640px;margin:0 auto;color:var(--muted);font-size:17px}
+.hstats{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;margin-top:30px}
+.hstat b{display:block;font-size:26px;color:var(--accent);font-weight:600;line-height:1.1}
+.hstat span{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(244,239,228,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.navin{display:flex;gap:2px;overflow-x:auto;max-width:1080px;margin:0 auto;padding:0 12px;scrollbar-width:none}
+.navin::-webkit-scrollbar{display:none}
+.navin button{flex:0 0 auto;background:none;border:0;border-bottom:2px solid transparent;padding:14px 14px 12px;
+  font:13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap}
+.navin button:hover{color:var(--ink)}
+.navin button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+
+main{padding:44px 0 90px}
+.panel{display:none}
+.panel.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sect{margin-bottom:52px}
+.sect>h2{font-size:24px;margin-bottom:6px}
+.sect>.sub{color:var(--muted);font-size:15px;margin-bottom:24px;max-width:660px}
+.lede{font-size:19px;line-height:1.62;color:#33373d;max-width:690px}
+.lede p{margin:0 0 18px}
+.lede p:first-child:first-letter{float:left;font-size:56px;line-height:.82;padding:5px 9px 0 0;color:var(--accent);font-weight:600}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:5px;font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+.pill:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.confirmed{color:var(--ok);border-color:rgba(60,107,79,.32);background:rgba(60,107,79,.07)}
+.probable{color:var(--maybe);border-color:rgba(163,113,27,.32);background:rgba(163,113,27,.08)}
+.unresolved{color:var(--no);border-color:rgba(154,63,63,.32);background:rgba(154,63,63,.07)}
+
+.key{display:flex;flex-wrap:wrap;gap:10px 20px;padding:16px 18px;background:var(--card);border:1px solid var(--rule);border-radius:12px;margin-bottom:28px}
+.key div{font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+
+/* tree */
+.tier{margin-bottom:6px}
+.tier-label{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.tier-label:before,.tier-label:after{content:"";flex:1;height:1px;background:var(--rule)}
+.couples{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.couple{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:14px;box-shadow:var(--shadow);position:relative}
+.couple.hl{border-color:rgba(140,90,43,.45);box-shadow:0 0 0 1px rgba(140,90,43,.16),var(--shadow)}
+.couple .cl{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.pnode{display:block;width:100%;text-align:left;background:none;border:0;padding:7px 8px;margin:0 -8px;border-radius:8px;cursor:pointer;font-family:inherit;color:inherit}
+.pnode:hover{background:rgba(140,90,43,.07)}
+.pnode .nm{font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pnode .mt{font-size:12.5px;color:var(--muted);margin-top:1px}
+.dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+.dot.confirmed{background:var(--ok)}.dot.probable{background:var(--maybe)}.dot.unresolved{background:var(--no)}
+.mline{border-top:1px dashed var(--rule);margin:9px 0;padding-top:8px;font-size:12px;color:var(--faint);font-style:italic}
+.drop{width:1px;height:26px;background:var(--rule);margin:0 auto}
+.drop.thick{width:2px;height:34px;background:linear-gradient(var(--rule),rgba(140,90,43,.5))}
+.joinbar{max-width:640px;margin:0 auto;background:linear-gradient(180deg,#fffdf7,#fbf6ea);border:1px solid rgba(140,90,43,.35);
+  border-radius:14px;padding:20px;text-align:center;box-shadow:var(--shadow)}
+.joinbar .cl{color:var(--accent)}
+.joinbar .pnode{text-align:center}
+.joinbar .pnode .nm{justify-content:center}
+.kids{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+.kid{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:10px 11px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;transition:.14s}
+.kid:hover{border-color:rgba(140,90,43,.45);transform:translateY(-1px);box-shadow:var(--shadow)}
+.kid .nm{font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center}
+.kid .mt{font-size:11.5px;color:var(--muted);margin-top:2px}
+.kid.died{background:repeating-linear-gradient(135deg,#fffdf7,#fffdf7 7px,#faf5ea 7px,#faf5ea 14px)}
+.kid.main{border-color:rgba(140,90,43,.5);background:#fdf7ec}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(40,32,20,.4);opacity:0;pointer-events:none;transition:.24s;z-index:98;backdrop-filter:blur(2px)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,100%);background:var(--card);z-index:99;
+  transform:translateX(101%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-14px 0 40px rgba(60,45,25,.15)}
+.drawer.on{transform:none}
+.dhead{padding:26px 28px 18px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--card);z-index:2}
+.dhead h3{font-size:25px;margin-bottom:5px}
+.dhead .role{color:var(--muted);font-size:14px}
+.dclose{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--rule);border-radius:50%;width:32px;height:32px;
+  cursor:pointer;color:var(--muted);font-size:17px;line-height:1}
+.dclose:hover{background:var(--paper);color:var(--ink)}
+.dbody{padding:22px 28px 60px}
+.dbody h4{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:26px 0 11px}
+.dbody h4:first-child{margin-top:0}
+.dsum{font-size:16px;color:#33373d;margin:0 0 4px}
+table.facts{width:100%;border-collapse:collapse;font-size:14.5px}
+table.facts td{padding:7px 0;border-bottom:1px solid #efe8da;vertical-align:top}
+table.facts td:first-child{width:38%;color:var(--muted);padding-right:14px;font-size:13px}
+.note{font-size:14.5px;color:#3a3e44;padding:11px 13px;background:#faf5ea;border-left:2px solid var(--rule);border-radius:0 7px 7px 0;margin-bottom:9px}
+.srcs{list-style:none;padding:0;margin:0}
+.srcs li{padding:6px 0;border-bottom:1px solid #efe8da;font-size:14px}
+.flagbox{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border-radius:8px;font-size:14px;margin-bottom:8px}
+.flagbox.probable{background:rgba(163,113,27,.08);color:#7a5514}
+.flagbox.unresolved{background:rgba(154,63,63,.07);color:#7d3333}
+
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;background:var(--rule)}
+.tlitem{position:relative;margin-bottom:26px}
+.tlitem:before{content:"";position:absolute;left:-30px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--rule)}
+.tlitem.major:before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(140,90,43,.14)}
+.tly{font:11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--faint);margin-bottom:3px}
+.tlt{font-size:17px;font-weight:600;margin-bottom:4px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.tld{color:var(--muted);font-size:15px;max-width:640px}
+
+/* places */
+.plcard{padding:18px 20px;margin-bottom:16px}
+.plcard h3{font-size:17px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.plcard h3 i{width:10px;height:10px;border-radius:3px;display:block}
+table.addr{width:100%;border-collapse:collapse;font-size:14.5px}
+table.addr td{padding:8px 10px 8px 0;border-bottom:1px solid #efe8da;vertical-align:top}
+table.addr tr:last-child td{border-bottom:0}
+table.addr td.yr{white-space:nowrap;font:11.5px/1.5 ui-monospace,Menlo,monospace;color:var(--faint);width:86px;padding-top:11px}
+table.addr td.ad{font-weight:600;width:26%;min-width:190px}
+table.addr td.nt{color:var(--muted);font-size:13.5px}
+
+
+/* scotland band in tree */
+.scotband{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  margin:14px 0 10px;display:flex;align-items:center;gap:12px}
+.scotband:before,.scotband:after{content:"";flex:1;height:1px;background:rgba(140,90,43,.3)}
+
+/* map */
+#mapwrap{position:relative;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+#map{height:480px;width:100%;background:#efe9dc}
+.mapbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--rule);background:#fbf7ee}
+.mapbar b{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+.mapbar button{font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;background:var(--card);border:1px solid var(--rule);
+  border-radius:20px;padding:6px 11px;cursor:pointer;color:var(--muted)}
+.mapbar button:hover{border-color:var(--accent);color:var(--accent)}
+.mapbar button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.maplegend{display:flex;flex-wrap:wrap;gap:8px 16px;padding:11px 14px;border-top:1px solid var(--rule);background:#fbf7ee;font-size:12.5px;color:var(--muted)}
+.maplegend span{display:flex;align-items:center;gap:6px}
+.maplegend i{width:11px;height:11px;border-radius:50%;display:block;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+#mapfallback{display:none}
+.leaflet-popup-content{margin:12px 14px;font:14px/1.5 "Iowan Old Style",Palatino,Georgia,serif}
+.leaflet-popup-content b{display:block;font-size:15px;margin-bottom:2px}
+.leaflet-popup-content .yr{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#948a79;text-transform:uppercase}
+.leaflet-popup-content p{margin:7px 0 9px;color:#5c5548;font-size:13.5px}
+.pinlbl{background:none;border:0}
+.pinlbl div{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+  color:#fff;font:11px/18px ui-monospace,Menlo,monospace;text-align:center}
+.pinlbl div.dem{border-style:dashed;opacity:.85}
+
+/* address tables */
+table.addr td.act{white-space:nowrap;width:1%;text-align:right;padding-left:10px}
+table.addr td.pin{width:1%;padding-right:12px;vertical-align:top;padding-top:10px}
+.pinbtn{width:23px;height:23px;border-radius:50%;border:0;color:#fff;cursor:pointer;
+  font:11px/23px ui-monospace,Menlo,monospace;padding:0;display:block}
+.pinbtn:hover{outline:2px solid rgba(140,90,43,.4);outline-offset:2px}
+.pinbtn.dem{opacity:.75;border:1px dashed #fff;line-height:21px}
+.pinbtn[disabled]{background:#e6ddcb !important;color:#a1957f;cursor:default}
+.svlink{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--rule);border-radius:20px;padding:5px 9px;color:var(--muted);text-decoration:none;display:inline-block}
+.svlink:hover{border-color:var(--accent);color:var(--accent)}
+.stat{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;padding:3px 7px;border-radius:20px;
+  border:1px solid;white-space:nowrap;margin-left:8px;vertical-align:2px}
+.st-extant{color:#3c6b4f;border-color:rgba(60,107,79,.3);background:rgba(60,107,79,.06)}
+.st-renamed{color:#2c5c7a;border-color:rgba(44,92,122,.3);background:rgba(44,92,122,.06)}
+.st-demolished{color:#9a3f3f;border-color:rgba(154,63,63,.3);background:rgba(154,63,63,.06)}
+.st-uncertain{color:#a3711b;border-color:rgba(163,113,27,.3);background:rgba(163,113,27,.07)}
+
+figure{margin:0}
+figure img{width:100%;display:block;border-radius:10px;border:1px solid var(--rule);background:#fff}
+figcaption{font-size:13px;color:var(--muted);margin-top:9px}
+
+/* records */
+.rec{padding:16px;margin-bottom:14px}
+.rec h3{font-size:16px;margin-bottom:3px}
+.rec .meta{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.rec img{width:100%;display:block;border:1px solid var(--rule);border-radius:8px;background:#fff;cursor:zoom-in;margin-bottom:8px}
+.recgroup{margin-bottom:34px}
+.recgroup>h3{font-size:19px;margin-bottom:4px}
+.recgroup>p{color:var(--muted);font-size:14.5px;margin:0 0 16px}
+
+/* questions */
+.q{padding:18px 20px;margin-bottom:14px}
+.q .qh{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px}
+.qn{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;
+  font:11px/1 ui-monospace,Menlo,monospace;margin-top:2px}
+.q h3{font-size:17px}
+.q p{margin:0 0 10px;color:#3a3e44;font-size:15px}
+.q .next{font-size:14.5px;background:#faf5ea;border-left:2px solid var(--accent);padding:10px 13px;border-radius:0 7px 7px 0;color:#3a3e44}
+.q .next b{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+.prio{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px solid var(--rule);padding:3px 7px;border-radius:20px}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(28,22,14,.93);z-index:200;display:none;place-items:center;padding:26px;cursor:zoom-out}
+.lb.on{display:grid}
+.lb img{max-width:100%;max-height:88vh;border-radius:6px}
+.lb p{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#e8dfcd;font-size:13.5px;margin:0;padding:0 20px}
+
+footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);font-size:13.5px;text-align:center}
+@media(max-width:720px){
+  table.addr,table.addr tbody,table.addr tr,table.addr td{display:block;width:auto !important;min-width:0 !important}
+  table.addr tr{position:relative;padding:14px 0 14px 36px;border-bottom:1px solid #efe8da}
+  table.addr tr:last-child{border-bottom:0}
+  table.addr td{border:0;padding:1px 0}
+  table.addr td.pin{position:absolute;left:0;top:14px;padding:0}
+  table.addr td.yr{padding-top:0;width:auto !important}
+  table.addr td.ad{font-size:16px;margin:2px 0 4px}
+  table.addr td.act{text-align:left;padding:9px 0 0}
+  .stat{margin-left:6px}
+  #map{height:360px}
+  .mapbar{gap:6px}
+  .mapbar button{padding:5px 9px;font-size:11.5px}
+}
+@media(max-width:640px){
+  header{padding:38px 0 22px}
+  .drawer{width:100%}
+  .dhead,.dbody{padding-left:20px;padding-right:20px}
+  .lede{font-size:17.5px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Dublin &amp; Cumbernauld · 1842 – 1958</div>
+    <h1>The <em>Valentines</em> and the <em>Kavanaghs</em></h1>
+    <p class="dek">Four generations of bookbinders, coachmen and cloakmakers on the north side of Dublin — the marriage, in August 1900, that brought the two families together, and the crossing to Scotland that ended the trade.</p>
+    <div class="hstats">
+      <div class="hstat"><b>40</b><span>People</span></div>
+      <div class="hstat"><b>4</b><span>Generations</span></div>
+      <div class="hstat"><b>32</b><span>Record images</span></div>
+      <div class="hstat"><b>18</b><span>Open questions</span></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="navin" role="tablist">
+    <button role="tab" data-t="story" aria-selected="true">The story</button>
+    <button role="tab" data-t="tree" aria-selected="false">Family tree</button>
+    <button role="tab" data-t="time" aria-selected="false">Timeline</button>
+    <button role="tab" data-t="places" aria-selected="false">Places</button>
+    <button role="tab" data-t="records" aria-selected="false">The records</button>
+    <button role="tab" data-t="open" aria-selected="false">Open questions</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- STORY -->
+<section class="panel on" id="p-story">
+  <div class="sect">
+    <div class="lede">
+      <p>On 3 August 1863, in St Mary's Pro-Cathedral on Marlborough Street, a twenty-one-year-old bookbinder named William Valentine married a seventeen-year-old bookfolder named Martha Mackey. She was still legally a minor. He was the son of a railway clerk; she was the daughter of a coach maker. Both of them worked in the book trade, and both of them would stay in it for the rest of their lives.</p>
+      <p>Ten years later, almost to the day, a widowed railway guard called James Kavanagh married sixteen-year-old Anne Walsh in the same church. Their fathers — a coachman and a carpenter — lived a few doors apart on Jervis Street, which is almost certainly how they met.</p>
+      <p>Those two marriages produced fifteen children between them. In August 1900, the seventh Valentine child married the second Kavanagh child, and the families became one. They had thirteen children of their own — eleven in Dublin, and then, some time between the Easter Rising and the War of Independence, they crossed to a village in Scotland and had two more.</p>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>What the records show</h2>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family of the book trade</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William was a bookbinder; Martha a bookfolder; their daughters Elizabeth and Martha both bookfolders; their son Louis a compositor and later a linotype operator; their son Thomas a book finisher who rose to foreman. Four of the death certificates in this tree describe the deceased simply as a bookbinder's wife, a bookbinder's child, a bookbinder's son. It was not just a job — it was the family's identity in the eyes of the state. And then, in one census line, it stops.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that changed church</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William was Church of Ireland, Martha Roman Catholic. Their first two children were baptised Catholic at the Pro-Cathedral. From 1871 every child was baptised at St George's, Church of Ireland. By 1901 Elizabeth is recorded as Wesleyan, Martha as Roman Catholic, and Thomas — baptised COI in 1881 — had married in the Pro-Cathedral as a Catholic. Denomination in this family bent to circumstance.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that buried its children</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">Of William and Martha's eleven children, four died before adulthood: William Thomas of meningitis at eight, Ruth Florence of diphtheria at two, Walter William of typhus at thirteen, and Mary — probably — of tuberculosis at nineteen. The Kavanaghs lost their firstborn, Patrick, at one month, of severe malnutrition. Thomas and Anne lost a son too: the 1911 census records seven children born and six living.</p>
+      </div>
+      <div class="card" style="padding:20px;border-color:rgba(140,90,43,.4)">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that gave up its trade</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">On 19 June 1921 the census finds them at the Wynd in Cumbernauld Village, Dunbartonshire: Thomas, Annie and twelve of their thirteen children — fourteen people in <b>two rooms</b>. Thomas, a foreman bookbinder finisher ten years earlier, is now a <b>railway porter</b> for the North British Railway Company. William and Thomas John are in the local brick and fireclay works; Martha is in a warehouse. Whatever took them across, it was not the book trade.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family always on the move</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">More than twenty different addresses appear across these records, nearly all of them within a mile of the Pro-Cathedral. Thomas and Anne alone lived at six Dublin addresses in sixteen years. The one period of stability is Portland Place, where William and Martha stayed for seventeen years and raised eight children. Then the family left Ireland altogether.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>The bookbinder's trade</h2>
+    <p class="sub">Context for what William, Thomas and Louis actually did all day — and why the work changed under them.</p>
+    <div class="card" style="padding:22px">
+      <p style="margin-top:0;color:#3a3e44">A bookbinder took printed sheets from the printer and turned them into books: folding and collating the gatherings, sewing them on a frame, attaching boards, covering in cloth or leather, then finishing — lettering, gilding, tooling, trimming and polishing. William's title, <b>bookbinder</b>, covered the whole craft. Thomas's title, <b>book finisher</b>, was the skilled decorative end of it.</p>
+      <p style="color:#3a3e44">Between 1880 and 1920 that craft split in two. Folding machines, sewing machines, casing-in machines, mechanical blocking presses and guillotines arrived in the commercial binderies. Much of the work was deskilled, and women and children entered the trade in large numbers as factory hands — by 1900 women outnumbered men in many trade binderies. Fine hand binding survived as a prestigious but shrinking niche.</p>
+      <p style="margin-bottom:0;color:#3a3e44">That is the arc this family lived through. Martha and both her bookfolder daughters were part of the female influx. Louis moved from hand compositing to operating a linotype machine. And Thomas — a foreman bookbinder finisher by 1911 — held on to the skilled end just as it was contracting. One Dublin firm of the period, <b>Galwey &amp; Co.</b> of 22 Eustace Street, was substantial enough to take on institutional work of the first rank — your notes credit it with a rebinding of the Book of Kells in 1895, though that particular attribution is not one I have been able to corroborate against the standard published accounts of the manuscript's binding history, which name 1826, an 1874 London rebinding, and Roger Powell's in 1953. The firm and its premises are well documented; the 1895 job would need Trinity's own binding records to settle.</p>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>How to read this</h2>
+    <div class="key">
+      <div><span class="pill confirmed">Confirmed</span> Every event in this person’s record is documented and consistent.</div>
+      <div><span class="pill probable">Probable</span> Identified, but at least one record carries a discrepancy.</div>
+      <div><span class="pill unresolved">Unresolved</span> The trail goes cold: a record could not be found, or there are too many candidates.</div>
+    </div>
+    <p class="small" style="color:var(--muted);max-width:660px">Every name in the family tree is clickable and opens the full detail — dates, addresses, occupations, the reasoning behind each identification, and links to the original records on irishgenealogy.ie and the National Archives of Ireland.</p>
+  </div>
+</section>
+
+<!-- TREE -->
+<section class="panel" id="p-tree">
+  <div class="sect">
+    <h2>The family tree</h2>
+    <p class="sub">Click any name for the full record. The coloured dot shows the <i>weakest</i> link in that person’s record, not the strongest — William Valentine is the best-documented man here and still shows red, because his birth has never been found. Hatched boxes mark children who died young.</p>
+    <div id="treeroot"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="panel" id="p-time">
+  <div class="sect">
+    <h2>Timeline</h2>
+    <p class="sub">A hundred and sixteen years, from a birth with no record to a death in another country. Larger dots mark the turning points.</p>
+    <div class="tl" id="tlroot"></div>
+  </div>
+</section>
+
+<!-- PLACES -->
+<section class="panel" id="p-places">
+  <div class="sect">
+    <h2>Where they lived</h2>
+    <p class="sub">Almost the whole of this story takes place in a small patch of north inner-city Dublin, between the Pro-Cathedral, the quays and Ballybough — and then, abruptly, in a village in Dunbartonshire. Every address below is clickable.</p>
+
+    <div id="mapwrap">
+      <div class="mapbar">
+        <b>Show</b>
+        <button data-fly="dublin" aria-pressed="true">Dublin</button>
+        <button data-fly="cumbernauld" aria-pressed="false">Cumbernauld</button>
+        <span style="flex:1"></span>
+        <b>Filter</b>
+        <button data-grp="all" aria-pressed="true">All</button>
+        <button data-grp="thomas" aria-pressed="false">Thomas &amp; Anne</button>
+        <button data-grp="william" aria-pressed="false">William &amp; Martha</button>
+        <button data-grp="kavanagh" aria-pressed="false">Kavanaghs</button>
+        <button data-grp="churches" aria-pressed="false">Churches</button>
+      </div>
+      <div id="map"></div>
+      <div class="maplegend" id="maplegend"></div>
+    </div>
+
+    <div id="mapfallback" style="margin-top:16px">
+      <div class="card" style="padding:14px 16px;margin-bottom:14px;font-size:14.5px;color:var(--muted)">
+        The live map needs an internet connection and could not load, so here are the static maps instead. Every address in the tables below still links out to Street View.
+      </div>
+      <div class="grid g2">
+        <figure class="card" style="padding:14px">
+          <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
+          <figcaption><b>The addresses, plotted.</b> The Valentines and Kavanaghs rarely strayed more than a mile from the Pro-Cathedral.</figcaption>
+        </figure>
+        <figure class="card" style="padding:14px">
+          <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
+          <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <p class="small" style="color:var(--muted);margin-top:18px;max-width:700px">A note on precision: these are 1860s&ndash;1920s addresses, and Dublin has renamed, renumbered and demolished a great deal since. Pins are placed as accurately as the evidence allows &mdash; sometimes to the actual house, more often to the street &mdash; and each is labelled with what happened to it. <b>Site of</b> means the building is gone and the link shows you what stands there now.</p>
+  </div>
+
+  <div class="sect">
+    <h2>The addresses</h2>
+    <div id="placeroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>The churches</h2>
+    <div id="churchroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>Two other places worth knowing</h2>
+    <div id="landmarkroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>Your original maps</h2>
+    <div class="grid g2">
+      <figure class="card" style="padding:14px">
+        <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
+        <figcaption><b>The addresses, plotted.</b> The numbered pins from your spreadsheet.</figcaption>
+      </figure>
+      <figure class="card" style="padding:14px">
+        <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
+        <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901. The street ran between Henry Street and Parnell Street and was swallowed by the Ilac Centre in the 1970s &mdash; it no longer exists.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- RECORDS -->
+<section class="panel" id="p-records">
+  <div class="sect">
+    <h2>The original records</h2>
+    <p class="sub">Twenty-nine images from parish registers, civil registration returns and census forms. Click any image to enlarge.</p>
+    <div id="recroot"></div>
+  </div>
+</section>
+
+<!-- OPEN -->
+<section class="panel" id="p-open">
+  <div class="sect">
+    <h2>Open questions</h2>
+    <p class="sub">What is still unresolved, roughly in the order worth tackling — and, for each, the most promising next step.</p>
+    <div id="qroot"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Compiled from the research spreadsheet <i>Valentine Dublin Research</i>. Sources: parish registers and civil registration returns via <a href="https://www.irishgenealogy.ie" target="_blank" rel="noopener">irishgenealogy.ie</a>; 1901 and 1911 census returns via the <a href="https://nationalarchives.ie/collections/search-the-census/" target="_blank" rel="noopener">National Archives of Ireland</a>.</p>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true"><div id="dcontent"></div></aside>
+<div class="lb" id="lb"><img alt=""><p></p></div>
+
+<script src="assets/lib/leaflet.js" defer></script>
+<script>
+const IMG={"c1921_full": "assets/records/c1921_full.jpg", "c1921_names": "assets/records/c1921_names.jpg", "c1921_occ": "assets/records/c1921_occ.jpg", "image1": "assets/records/image1.jpg", "image10": "assets/records/image10.jpg", "image11": "assets/records/image11.jpg", "image12": "assets/records/image12.jpg", "image13": "assets/records/image13.jpg", "image14": "assets/records/image14.jpg", "image15": "assets/records/image15.jpg", "image16": "assets/records/image16.jpg", "image17": "assets/records/image17.jpg", "image18": "assets/records/image18.jpg", "image19": "assets/records/image19.jpg", "image2": "assets/records/image2.jpg", "image20": "assets/records/image20.jpg", "image21": "assets/records/image21.jpg", "image22": "assets/records/image22.jpg", "image23": "assets/records/image23.jpg", "image24": "assets/records/image24.jpg", "image25": "assets/records/image25.jpg", "image26": "assets/records/image26.jpg", "image27": "assets/records/image27.jpg", "image28": "assets/records/image28.jpg", "image29": "assets/records/image29.jpg", "image3": "assets/records/image3.jpg", "image4": "assets/records/image4.jpg", "image5": "assets/records/image5.jpg", "image6": "assets/records/image6.jpg", "image7": "assets/records/image7.jpg", "image8": "assets/records/image8.jpg", "image9": "assets/records/image9.jpg"};
+const IMGDIM={"c1921_full": [1400, 921], "c1921_names": [1400, 659], "c1921_occ": [1400, 441], "image1": [1150, 781], "image10": [871, 109], "image11": [852, 86], "image12": [1150, 342], "image13": [1150, 91], "image14": [1150, 76], "image15": [1150, 122], "image16": [1150, 433], "image17": [1150, 685], "image18": [1150, 523], "image19": [1150, 134], "image2": [1150, 443], "image20": [1150, 197], "image21": [834, 130], "image22": [845, 172], "image23": [1150, 724], "image24": [1150, 136], "image25": [1150, 226], "image26": [1150, 681], "image27": [1150, 646], "image28": [554, 401], "image29": [1150, 934], "image3": [1150, 82], "image4": [1150, 65], "image5": [1150, 68], "image6": [1150, 65], "image7": [856, 316], "image8": [1079, 175], "image9": [1102, 168]};
+
+/* ============ DATA ============ */
+const IG = 'https://www.irishgenealogy.ie';
+const SP = 'https://www.scotlandspeople.gov.uk/';
+const C = {y:'confirmed', p:'probable', u:'unresolved'};
+
+const PEOPLE = {
+
+/* ---- Generation 1: the oldest known ---- */
+wv_sr: {name:'William Valentine', gen:1, line:'valentine', conf:C.p,
+  role:'Railway Clerk', dates:'dates unknown',
+  summary:'Named as the father of the groom on the 1863 marriage record, living at 93 Marlboro Street. Nothing else about him has been traced.',
+  facts:[['Occupation','Railway Clerk'],['Address (1863)','93 Marlboro Street, Dublin'],['Wife','Elizabeth Valentine'],['Birth','Not found'],['Death','Not found']],
+  notes:['Known only from his son’s 1863 marriage entry. A railway clerk was a respectable, literate white-collar job — consistent with the family’s Church of Ireland side.'],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1863 marriage record (church)', IG+'/view/?record_id=707108e3c7-312']]},
+
+el_sr: {name:'Elizabeth Valentine', gen:1, line:'valentine', conf:C.p,
+  role:'', dates:'dates unknown',
+  summary:'Named as the groom’s mother on the 1863 marriage record. Her maiden name is not recorded.',
+  facts:[['Husband','William Valentine, Railway Clerk'],['Address (1863)','93 Marlboro Street, Dublin'],['Maiden name','Unknown'],['Birth','Not found'],['Death','Not found']],
+  notes:['A maiden name for Elizabeth would be the single most useful discovery for pushing this line back.'],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1863 marriage record (church)', IG+'/view/?record_id=707108e3c7-312']]},
+
+pm_sr: {name:'Patrick Mackey', gen:1, line:'mackey', conf:C.p,
+  role:'Coach Maker', dates:'dates unknown',
+  summary:'Martha’s father. A coach maker of 18 Greenville Street. A Patrick Mackey also stood as sponsor at the 1846 baptism that may be Martha’s.',
+  facts:[['Occupation','Coach Maker'],['Address (1863)','18 Greenville Street, Dublin'],['Wife','Catherine Mackey'],['Birth','Not found'],['Death','Not found']],
+  notes:['Patrick and Catherine Mackey appear together as sponsors at the 1846 baptism of a “Martha Herbert” — the strongest clue to Martha’s origins, and an odd one.'],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1863 marriage record (church)', IG+'/view/?record_id=707108e3c7-312'],['1846 baptism (possible)', IG+'/view/?record_id=c963d01f6e-9829']]},
+
+cm_sr: {name:'Catherine Mackey', gen:1, line:'mackey', conf:C.p,
+  role:'', dates:'dates unknown',
+  summary:'Martha’s mother, named on the 1863 marriage record and possibly a sponsor at the 1846 baptism.',
+  facts:[['Husband','Patrick Mackey, Coach Maker'],['Address (1863)','18 Greenville Street, Dublin'],['Maiden name','Unknown'],['Birth','Not found'],['Death','Not found']],
+  notes:[],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1863 marriage record (church)', IG+'/view/?record_id=707108e3c7-312']]},
+
+jk_sr: {name:'John Kavanagh', gen:1, line:'kavanagh', conf:C.p,
+  role:'Coachman', dates:'dates unknown',
+  summary:'James’s father, a coachman of 37 Jervis Street — a few doors from the Walshes at number 31.',
+  facts:[['Occupation','Coachman'],['Address (1873)','37 Jervis Street, Dublin'],['Wife','Mary Kavanagh'],['Birth','Not found'],['Death','Not found']],
+  notes:['The Kavanaghs at 37 and the Walshes at 31 Jervis Street were near neighbours, a few doors apart — which is very likely how James and Anne met.'],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1873 marriage record (church)', IG+'/view/?record_id=707108e3c7-3444']]},
+
+mk_sr: {name:'Mary Kavanagh', gen:1, line:'kavanagh', conf:C.p, role:'', dates:'dates unknown',
+  summary:'James’s mother, named on the 1873 marriage record.',
+  facts:[['Husband','John Kavanagh, Coachman'],['Address (1873)','37 Jervis Street, Dublin'],['Maiden name','Unknown']],
+  notes:[], flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1873 marriage record (church)', IG+'/view/?record_id=707108e3c7-3444']]},
+
+pw_sr: {name:'Patrick Walsh', gen:1, line:'walsh', conf:C.p,
+  role:'Carpenter', dates:'dates unknown',
+  summary:'Anne’s father, a carpenter of 31 Jervis Street.',
+  facts:[['Occupation','Carpenter'],['Address (1873)','31 Jervis Street, Dublin'],['Wife','Anne Walsh'],['Birth','Not found'],['Death','Not found']],
+  notes:['Various Walshes recur as godparents to the Kavanagh children — Mary Walsh in 1880, Rebecca Walsh in 1887 — and a nephew, Patrick Walsh, was living with the family in 1901.'],
+  flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1873 marriage record (church)', IG+'/view/?record_id=707108e3c7-3444']]},
+
+aw_sr: {name:'Anne Walsh', gen:1, line:'walsh', conf:C.p, role:'', dates:'dates unknown',
+  summary:'Anne’s mother, named on the 1873 marriage record. Mother and daughter shared the same name.',
+  facts:[['Husband','Patrick Walsh, Carpenter'],['Address (1873)','31 Jervis Street, Dublin'],['Maiden name','Unknown']],
+  notes:[], flags:[['probable','Known only from a single record — no dates traced']],
+  sources:[['1873 marriage record (church)', IG+'/view/?record_id=707108e3c7-3444']]},
+
+/* ---- Generation 2 ---- */
+WV: {name:'William Valentine', gen:2, line:'valentine', conf:C.u, star:true,
+  role:'Bookbinder', dates:'c.1842 – 1908',
+  summary:'A Dublin bookbinder who married at about twenty-one, fathered eleven children, buried three of them, was widowed in 1900 and died of tuberculosis in 1908 with his son Thomas at his bedside. He is the anchor of the whole Valentine line — and the one person whose birth has never been found.',
+  facts:[
+    ['Born','c.1842 — no record found'],
+    ['Occupation','Bookbinder (also recorded as Book-binder, 1908)'],
+    ['Married','3 August 1863, St Mary’s Pro-Cathedral, Dublin'],
+    ['Wife','Martha Mackey'],
+    ['Religion','Church of Ireland'],
+    ['Died','29 December 1908, 27 Ross Street, Dublin'],
+    ['Age at death','67'],
+    ['Cause of death','Phthisis pulmonalis (pulmonary tuberculosis)'],
+    ['Informant','Thomas Valentine, son, present at death, of 2 St Mary’s Terrace, Ballybough Road']],
+  notes:[
+    'Recorded on his death certificate as <b>William Thomas</b> Valentine — the only document that gives him a middle name.',
+    'Civil registration of births in Ireland did not begin until 1864, so there is no birth certificate to find. The 1863 marriage says he was “of full age”; the 1901 census gives 59; the death certificate gives 67. Those point at 1841–42.',
+    'The nearest candidate baptism — a William Valentine born in Dublin in 1840 to John and Charlotte — was examined and rejected as not close enough.'],
+  flags:[['unresolved','No birth or baptism record found']],
+  sources:[
+    ['1863 marriage — church record', IG+'/view/?record_id=707108e3c7-312'],
+    ['1863 marriage — civil record (PDF)', IG+'/files/civil/marriage_returns/marriages_1863/09649/5499445.pdf'],
+    ['1901 census — Oxmantown Road', 'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=valentine&firstname__icontains=william&id=5200084'],
+    ['1908 death record', IG+'/view/?record_id=0c9e5f72a2-3184848'],
+    ['1908 death certificate (PDF)', IG+'/files/civil/deaths_returns/deaths_1908/05480/4534503.pdf']]},
+
+MM: {name:'Martha Mackey', gen:2, line:'valentine', conf:C.p, star:true,
+  role:'Bookfolder', dates:'c.1846 – 1900',
+  summary:'Married at seventeen and still legally a minor. A bookfolder by trade — the same industry as her husband — she bore eleven children over twenty-six years and died at 54, less than four weeks before her son Thomas married.',
+  facts:[
+    ['Born','c.1846 — possible baptism found, see note'],
+    ['Occupation','Bookfolder'],
+    ['Married','3 August 1863, St Mary’s Pro-Cathedral, aged 17 (“minor”)'],
+    ['Address at marriage','134 Great Britain Street — but see note'],
+    ['Religion','Roman Catholic'],
+    ['Died','10 July 1900, 30 Portland Place'],
+    ['Age at death','54'],
+    ['Cause of death','Cardiac asthenia (heart exhaustion)'],
+    ['Described as','“Bookbinder’s Wife”']],
+  notes:[
+    'A baptism of a <b>Martha Herbert</b> in 1846 is the best candidate for her: the year matches her age at death exactly, and the sponsors were Patrick and Catherine Mackey — the same names given as her parents at her wedding. Why the surname is Herbert rather than Mackey is unexplained.',
+    'No Martha Mackey was born anywhere in Ireland in the surrounding years, which makes the Herbert record more compelling rather than less.',
+    'Her address at the 1863 marriage is recorded as 134 Great Britain Street; the summary chart in the original spreadsheet gives 153 Great Britain Street for that year. The two have not been reconciled.',
+    'On her son Thomas’s 1900 marriage record her name is written as Martha <b>Markey</b>, and the 1863 church register uses Markey too — one of several spelling drifts in these documents.'],
+  flags:[['probable','Baptism identified as Martha Herbert, 1846 — surname unexplained']],
+  sources:[
+    ['1846 baptism — possible', IG+'/view/?record_id=c963d01f6e-9829'],
+    ['1863 marriage — church record', IG+'/view/?record_id=707108e3c7-312'],
+    ['1900 death record', IG+'/view/?record_id=0c9e5f72a2-3909054'],
+    ['1900 death certificate (PDF)', IG+'/files/civil/deaths_returns/deaths_1900/05753/4625051.pdf']]},
+
+JK: {name:'James Kavanagh', gen:2, line:'kavanagh', conf:C.u, star:true,
+  role:'Railway Guard, later General Labourer', dates:'c.1847 – ?',
+  summary:'A widower when he married sixteen-year-old Anne Walsh in 1873. His working life moved downward — railway guard, then porter, then general labourer — and he disappears from the record after 1901.',
+  facts:[
+    ['Born','c.1847 — no record found'],
+    ['Occupation 1873','Railway Guard'],
+    ['Occupation 1882','Porter'],
+    ['Occupation 1901','General Labourer'],
+    ['Married','4 August 1873, St Mary’s Pro-Cathedral — as a widower'],
+    ['Wife','Anne Walsh'],
+    ['Religion','Roman Catholic'],
+    ['1901 census','30 Little Denmark Street, aged 54'],
+    ['Died','Not found']],
+  notes:[
+    'He was already a widower at 26. That means there was very likely an earlier wife and possibly half-siblings to Anne — an entire branch of this family that has not been looked for.',
+    'The civil copy of the 1873 marriage spells the name <b>Cavanagh</b>, not Kavanagh. The addresses and dates match exactly, so it is the same event — but it shows how easily this family slips between spellings.',
+    'The 1882 birth registration records him as illiterate; the 1901 census says he could read and write. One of the two is wrong, or he learned in between.',
+    'Neither James nor Anne can be found in the 1911 census under any obvious combination of names.'],
+  flags:[['unresolved','No birth record; no death record; absent from 1911 census']],
+  sources:[
+    ['1873 marriage — church record', IG+'/view/?record_id=707108e3c7-3444'],
+    ['1873 marriage — civil record (PDF)', IG+'/files/civil/marriage_returns/marriages_1873/11287/8140708.pdf'],
+    ['1901 census — Little Denmark Street', 'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=kavanagh&firstname__icontains=james&county=Dublin&religion_updated=Roman+Catholic&townland=Little+Denmark+Street&id=5190883']]},
+
+AWm: {name:'Anne Walsh', gen:2, line:'kavanagh', conf:C.u, star:true,
+  role:'Cloakmaker', dates:'c.1857 – ?',
+  summary:'Married at sixteen to a widower ten years her senior. She was still turning up as a witness at her grandchildren’s births in 1911 and 1914.',
+  facts:[
+    ['Born','c.1857 — no record found'],
+    ['Occupation','Cloakmaker'],
+    ['Married','4 August 1873, aged 16 (“minor”)'],
+    ['Address at marriage','31 Jervis Street'],
+    ['Religion','Roman Catholic'],
+    ['1901 census','30 Little Denmark Street, aged 44'],
+    ['Last seen','1914, at 22 Kings Avenue'],
+    ['Died','Not found']],
+  notes:[
+    'An <b>Anne Kavanagh of 177 Great Britain Street</b> was present at the birth of her grandson Thomas on 14 November 1911, and an Anne Kavanagh at 22 Kings Avenue at the birth of her granddaughter Anne in 1914. Almost certainly her — which means she outlived the 1911 census she cannot be found in.',
+    'Searches for her under her maiden name, in case she reverted to Walsh in widowhood, also came up empty.'],
+  flags:[['unresolved','No birth or death record; absent from 1911 census']],
+  sources:[
+    ['1873 marriage — church record', IG+'/view/?record_id=707108e3c7-3444'],
+    ['1911 birth of grandson Thomas (PDF)', IG+'/files/civil/birth_returns/births_1911/01519/1616867.pdf'],
+    ['1914 birth of granddaughter Anne (PDF)', IG+'/files/civil/birth_returns/births_1914/01396/1573957.pdf']]},
+
+/* ---- Generation 3: the eleven Valentine children ---- */
+v1: {name:'Elizabeth Valentine', gen:3, line:'valentine', conf:C.u, parent:'WV',
+  role:'Bookfolder', dates:'1864 – ?',
+  summary:'The eldest. Baptised Roman Catholic, recorded as Wesleyan in 1901, married in a Catholic church in 1903 at the age of 38.',
+  facts:[['Born','15 June 1864'],['Baptised','Pro-Cathedral, Roman Catholic'],['Family home','14 Gloucester Place'],
+    ['1901 census','Aged 36, Wesleyan, Bookfolder, unmarried, living with her father'],
+    ['Married','21 February 1903, Aughrim Street RC'],['Husband','Matthew J Byrne, Paper Cutter'],
+    ['Address at marriage','25 Oxmantown Road'],['Died','Not found']],
+  notes:['Roman Catholic at baptism, Wesleyan at 36, married in a Catholic church at 38 — this family moved between denominations more than once.',
+    'Her death has not been traced: some 794 Elizabeth Byrnes died in Ireland between 1903 and 1954.'],
+  flags:[['unresolved','No death record identified']],
+  sources:[['Baptism 1864 (PDF)', IG+"/files/church/st.mary's-pro-cath_mf_1858-1865_ba_0631.pdf"],
+    ['Marriage 1903 (PDF)', IG+'/files/civil/marriage_returns/marriages_1903/10237/5725516.pdf']]},
+
+v2: {name:'Martha Valentine', gen:3, line:'valentine', conf:C.p, parent:'WV',
+  role:'Bookfolder', dates:'1869 – 1921?',
+  summary:'Married a gardener in 1894, widowed by 1901, and back living in her father’s house with her three-year-old daughter.',
+  facts:[['Born','17 July 1869'],['Family home','22 Sandwith Place'],['Baptism sponsors','Robert Valintine and Mary Markey'],
+    ['Married','11 November 1894, St Agatha’s RC, William Street North'],['Husband','Laurence Byrne, Gardener'],
+    ['Address at marriage','30 Portland Row'],
+    ['1901 census','Aged 31, widow, Bookfolder, at Oxmantown Road with daughter Martha, 3'],
+    ['Died','13 June 1921 — probable'],['Age at death','50'],['Cause','Asthenia (exhaustion)'],['Occupation at death','House Maid']],
+  notes:['Her baptism sponsors, Robert <b>Valintine</b> and Mary <b>Markey</b>, are almost certainly a Valentine relative and a Mackey relative under variant spellings — a lead worth chasing.',
+    'The 1921 death is a good age match but records her as a <b>spinster</b>, not a widow, which does not fit.',
+    'A Martha Mary Byrne, 40, widow, and a Martha Lillian Byrne, 13, appear as boarders at 13 Wood Lane in the 1911 census — plausibly her and her daughter, though recorded as Protestant Church of Ireland.'],
+  flags:[['probable','1921 death record: age fits, marital status does not']],
+  sources:[['Baptism record', IG+'/view/?record_id=c963d01f6e-50809'],
+    ['Birth certificate 1869 (PDF)', IG+'/files/civil/birth_returns/births_1869/03385/2241277.pdf'],
+    ['Marriage 1894 (PDF)', IG+'/files/civil/marriage_returns/marriages_1894/10580/5854281.pdf'],
+    ['Death 1921 (PDF)', IG+'/files/civil/deaths_returns/deaths_1921/05097/4400215.pdf']]},
+
+v3: {name:'William Thomas Valentine', gen:3, line:'valentine', conf:C.y, parent:'WV',
+  role:'', dates:'1871 – 1879',
+  summary:'Died at eight of meningitis. The first of the family to be baptised in the Church of Ireland rather than the Pro-Cathedral.',
+  facts:[['Born','12 September 1871'],['Baptised','St George COI, Hardwicke Place'],['Family home','13 Summer Street'],
+    ['Died','3 October 1879, Dublin North'],['Age at death','8'],['Cause','Meningitis (unconfirmed)'],['Recorded as','“Child of Bookbinder”']],
+  notes:['His baptism marks the switch: the first two children were baptised Roman Catholic, and every child from 1871 onward was baptised at St George’s, Church of Ireland.'],
+  sources:[['Baptism 1871 (PDF)', IG+'/files/church/d-298-2-8-127.pdf'],
+    ['Death 1879 (PDF)', IG+'/files/civil/deaths_returns/deaths_1879/06499/4870945.pdf']]},
+
+v4: {name:'Robert Valentine', gen:3, line:'valentine', conf:C.p, parent:'WV',
+  role:'Jeweller', dates:'1873 – 1935',
+  summary:'A jeweller — the one child who left the book trade. Married Mary Ellen McCarthy in 1894; his brother Louis married a Christina McCarthy six years later.',
+  facts:[['Born','15 December 1873'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['Married','22 July 1894, St Joseph’s RC, Berkeley Road'],['Wife','Mary Ellen McCarthy, Tailoress'],
+    ['Address at marriage','40 O’Connell Avenue'],['Occupation','Jeweller'],
+    ['Died','4 May 1935, Dublin South'],['Age at death','62 (expected 61)'],['Cause','Sarcoma']],
+  notes:['Two brothers married two McCarthys six years apart. Whether Mary Ellen and Christina were sisters has not been established, but it would be an easy thing to check.',
+    'A Mary Ann Valentine who married in 1922 is recorded as a daughter of Robert Valentine — the beginning of a next generation on this branch.'],
+  flags:[['probable','Age at death out by one year']],
+  sources:[['Baptism 1873 (PDF)', IG+'/files/church/d-298-2-8-145.pdf'],
+    ['Marriage 1894 (PDF)', IG+'/files/civil/marriage_returns/marriages_1894/10571/5850929.pdf'],
+    ['Death 1935 (PDF)', IG+'/files/civil/deaths_returns/deaths_1935/04825/4300255.pdf'],
+    ['Daughter’s marriage 1922 (PDF)', IG+'/files/civil/marriage_returns/marriages_1922/09195/5325796.pdf']]},
+
+v5: {name:'Louis Valentine', gen:3, line:'valentine', conf:C.p, parent:'WV',
+  role:'Compositor, later Linotype Operator', dates:'1876 – 1945',
+  summary:'Stayed in the print trade but on the typesetting side. Married five days before his mother died, and a month before his brother Thomas.',
+  facts:[['Born','18 April 1876'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['Married','5 July 1900, Pro-Cathedral RC'],['Wife','Christina McCarthy'],['Address at marriage','42 Hardwicke Street'],
+    ['Occupation','Compositor; later Linotype Operator'],
+    ['Died','11 December 1945, Dublin North'],['Age at death','67 (expected 69)'],['Cause','Acute pancreatitis']],
+  notes:['The summer of 1900 was extraordinary for this family: Louis married on 5 July, his mother Martha died on 10 July, and his brother Thomas married on 5 August.',
+    'From hand compositor to linotype operator is exactly the mechanisation story that reshaped the Dublin print trade in his lifetime.'],
+  flags:[['probable','Age at death out by two years']],
+  sources:[['Baptism 1876 (PDF)', IG+'/files/church/d-298-2-9-004.pdf'],
+    ['Marriage 1900 (PDF)', IG+'/files/civil/marriage_returns/marriages_1900/10335/5762734.pdf'],
+    ['Death 1945 (PDF)', IG+'/files/civil/deaths_returns/deaths_1945/04614/4224058.pdf']]},
+
+v6: {name:'Hannah Valentine', gen:3, line:'valentine', conf:C.u, parent:'WV',
+  role:'', dates:'1878 – ?',
+  summary:'Aged 22 and at home in 1901, with no occupation recorded. After that she vanishes — no marriage, no death, nothing.',
+  facts:[['Born','13 September 1878'],['Baptised','St George COI, Hardwicke Place'],['Family home','31 Portland Place'],
+    ['1901 census','Aged 22, Church of Ireland, no occupation, unmarried'],['Married','Not found'],['Died','Not found']],
+  notes:['One of the clearest gaps in the whole tree. She is solidly documented up to 1901 and then disappears. Emigration is the obvious possibility.'],
+  flags:[['unresolved','No marriage or death record found after 1901']],
+  sources:[['Baptism 1878 (PDF)', IG+'/files/church/d-298-2-9-023.pdf']]},
+
+v7: {name:'Thomas Valentine', gen:3, line:'both', conf:C.y, parent:'WV', star:true,
+  role:'Book Finisher, later Foreman Bookbinder', dates:'1881 – 1937',
+  summary:'The point where the two families join. Baptised Church of Ireland like his siblings, he was recorded as Roman Catholic by the time he married Anne Kavanagh at nineteen. He rose to foreman in the bindery, fathered thirteen children, and eventually took the family to Scotland.',
+  facts:[['Born','18 April 1881'],['Baptised','St George COI, Hardwicke Place'],
+    ['Family home','31 Portland Place'],
+    ['Married','5 August 1900, St Mary’s Pro-Cathedral'],['Wife','Anne Kavanagh'],
+    ['Address at marriage','30 Portland Place'],
+    ['1901 census','Aged 19, 152 Great Britain Street, Book Finisher, Roman Catholic'],
+    ['1911 census','Aged 29, 22 Ballybough Road, Foreman Bookbinder Finisher'],
+    ['1921 census','Aged 40, the Wynd, Cumbernauld, Dunbartonshire — <b>Railway Porter</b>, North British Railway Co'],
+    ['Died','12 October 1937']],
+  notes:['Between his 1881 Church of Ireland baptism and his 1900 Catholic marriage he changed denomination — the research notes suggest a Roman Catholic baptism around the age of eleven, which would be worth confirming.',
+    'He was present at his father’s death in December 1908 and gave the information for the certificate.',
+    'No image survives of his civil birth registration — it may be corrupted, though the original could still be viewable in Dublin.',
+    'The family emigrated to Scotland. The 1921 census finds them at the Wynd in Cumbernauld Village — fourteen people in two rooms — and Thomas is no longer a bookbinder but a <b>railway porter</b> for the North British Railway Company. Three generations in the book trade end with that entry.',
+    'His two eldest sons had gone into the fireclay and brick works of the district: William with J. G. Stein &amp; Co, Thomas John with the Castlecary Fireclay Co.',
+    'His children’s marriages should be found in Scottish records rather than Irish ones.'],
+  sources:[['Baptism record', IG+'/view/?record_id=19d58ec1c8-10756'],
+    ['St George baptism register (PDF)', IG+'/files/church/d-298-2-9-042.pdf'],
+    ['Marriage 1900 — church record', IG+'/view/?record_id=76e681dcc3-5778'],
+    ['Marriage 1900 — civil record (PDF)', IG+'/files/civil/marriage_returns/marriages_1900/10355/5769507.pdf'],
+    ['1901 census', 'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=valentine&firstname__icontains=thomas&id=5180096'],
+    ['1911 census', 'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1911&surname__icontains=valentine&firstname__icontains=william&id=48711'],
+    ['1921 census of Scotland — Cumbernauld 495/9/19', SP]]},
+
+v8: {name:'Ruth Florence Valentine', gen:3, line:'valentine', conf:C.y, parent:'WV',
+  role:'', dates:'1883 – 1886',
+  summary:'Died of diphtheria at two years old.',
+  facts:[['Born','13 December 1883'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['Died','11 April 1886, Dublin North'],['Age at death','2'],['Cause','Diphtheria'],['Recorded as','“Bookbinder’s child”']],
+  notes:[],
+  sources:[['Baptism 1883 (PDF)', IG+'/files/church/d-298-2-9-062.pdf'],
+    ['Death 1886 (PDF)', IG+'/files/civil/deaths_returns/deaths_1886/06251/4789855.pdf']]},
+
+v9: {name:'Walter William Valentine', gen:3, line:'valentine', conf:C.y, parent:'WV',
+  role:'', dates:'1886 – 1899',
+  summary:'Died of typhus at thirteen, twenty months before the 1901 census — which is why he is missing from it.',
+  facts:[['Born','10 February 1886'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['Died','11 August 1899, Dublin South'],['Age at death','13'],['Cause','Typhus'],['Recorded as','“Bookbinder’s Son”']],
+  notes:['Typhus is a disease of overcrowding and poor sanitation. It is a hard reminder of what Dublin tenement life meant, even for a skilled tradesman’s family.'],
+  sources:[['Baptism 1886 (PDF)', IG+'/files/church/d-298-2-9-078.pdf'],
+    ['Death 1899 (PDF)', IG+'/files/civil/deaths_returns/deaths_1899/05790/4637602.pdf']]},
+
+v10: {name:'Reuben John Valentine', gen:3, line:'valentine', conf:C.u, parent:'WV',
+  role:'Scholar in 1901', dates:'1888 – ?',
+  summary:'A schoolboy of thirteen in 1901, and then nothing. His birth record is the document that proved the 1901 census household was the right family.',
+  facts:[['Born','5 January 1888'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['1901 census','Aged 13, Church of Ireland, Scholar'],['Married','Not found'],['Died','Not found — also searched as John Valentine']],
+  notes:['His birth registration — father William Valentine, bookbinder, mother Martha Mary Valentine formerly Markey, 30 Portland Place — is what confirmed the Oxmantown Road census household belonged to this family.'],
+  flags:[['unresolved','No marriage or death record found after 1901']],
+  sources:[['Birth record', IG+'/view/?record_id=5fc6443d7a-3891754'],
+    ['Birth certificate 1888 (PDF)', IG+'/files/civil/birth_returns/births_1888/02528/1936574.pdf'],
+    ['Baptism 1888 (PDF)', IG+'/files/church/d-298-2-9-096.pdf']]},
+
+v11: {name:'Mary Valentine', gen:3, line:'valentine', conf:C.p, parent:'WV',
+  role:'', dates:'1890 – 1910?',
+  summary:'The youngest. A scholar of eleven in 1901; a probable death from tuberculosis at nineteen.',
+  facts:[['Born','25 March 1890'],['Baptised','St George COI, Hardwicke Place'],['Family home','30 Portland Place'],
+    ['1901 census','Aged 11, Church of Ireland, Scholar'],
+    ['Died','26 January 1910, Dublin South — uncertain'],['Age at death','19'],['Cause','Tuberculosis'],['Occupation','Dyer (unclear)']],
+  notes:['The research note on this record reads “not convinced”. The occupation is hard to read and the entry raises the question of whether Isabella was a confirmation name.'],
+  flags:[['probable','Death record identified but not accepted with confidence']],
+  sources:[['Baptism 1890 (PDF)', IG+'/files/church/d-298-2-9-112.pdf'],
+    ['Death 1910 (PDF)', IG+'/files/civil/deaths_returns/deaths_1910/05437/4520718.pdf']]},
+
+/* ---- Generation 3: the four Kavanagh children ---- */
+k1: {name:'Patrick Kavanagh', gen:3, line:'kavanagh', conf:C.y, parent:'JK',
+  role:'', dates:'1880',
+  summary:'Lived one month. The cause of death was recorded as severe malnutrition.',
+  facts:[['Born','28 January 1880'],['Baptised','Pro-Cathedral'],['Family home','23 Cumberland Street'],
+    ['Godmother','Mary Walsh'],['Died','28 February 1880'],['Age at death','0'],['Cause','Severe malnutrition']],
+  notes:['Severe malnutrition on an infant death certificate in 1880 Dublin says more about the family’s circumstances than any census return could.'],
+  sources:[['Baptism 1880 (PDF)', IG+"/files/church/st.mary's-pro-cath_mf_1872-1880_ba_0770.pdf"],
+    ['Death 1880 (PDF)', IG+'/files/civil/deaths_returns/deaths_1880/06489/4867549.pdf']]},
+
+k2: {name:'Anne Kavanagh', gen:3, line:'both', conf:C.y, parent:'JK', star:true,
+  role:'', dates:'1882 – 1958',
+  summary:'Married Thomas Valentine at eighteen and became the mother of thirteen children. She outlived her husband by twenty-one years.',
+  facts:[['Born','13 March 1882'],['Baptised','Pro-Cathedral'],['Family home','128 Upper Abbey Street'],
+    ['Father’s occupation','Porter (recorded as illiterate)'],
+    ['Married','5 August 1900, St Mary’s Pro-Cathedral'],['Husband','Thomas Valentine'],
+    ['Address at marriage','30 Denmark Street'],
+    ['1901 census','Aged 18, 152 Great Britain Street'],
+    ['1911 census','Aged 29, married 10 years, 7 children born, 6 living'],
+    ['1921 census','Aged 39, the Wynd, Cumbernauld — recorded as Annie E. Valentine, home duties'],
+    ['Died','18 June 1958']],
+  notes:['She is the only Anne Kavanagh born in Dublin in 1881–83 with the right parents’ names, in the right part of the city, at the right church — which is what makes the identification solid.',
+    'She emigrated with the family to Scotland, and bore two more children there — Brendon and Mary — bringing the total to thirteen.',
+    'The 1921 census records her as <b>Annie E.</b> Valentine. No middle name appears on any Irish record, and the initial is unexplained.'],
+  sources:[['Birth record', IG+'/view/?record_id=5fc6443d7a-4683128'],
+    ['Baptism record', IG+'/view/?record_id=6140e1e377-3034'],
+    ['Birth certificate 1882 (PDF)', IG+'/files/civil/birth_returns/births_1882/02795/2025895.pdf'],
+    ['Baptism register (PDF)', IG+'/files/church/st.marys_pro-cathedral_mf_1880-1889_ba_0241.pdf'],
+    ['1921 census of Scotland — Cumbernauld 495/9/19', SP]]},
+
+k3: {name:'James Kavanagh', gen:3, line:'kavanagh', conf:C.u, parent:'JK',
+  role:'General Labourer', dates:'1884 – ?',
+  summary:'A general labourer of seventeen in 1901, and then lost in a sea of namesakes.',
+  facts:[['Born','8 February 1884'],['Baptised','Pro-Cathedral'],['Family home','9 Upper Abbey Street'],
+    ['Godmother','Mary Carroll'],['1901 census','Aged 17, General Labourer'],
+    ['Married','Not found — around 80 James Kavanaghs married in Dublin 1901–1918'],
+    ['Died','Not found — 22 possible matches by age and year']],
+  notes:['The problem here is not a lack of records but far too many of them. Without another identifying detail — an address, a wife’s name, an occupation — he cannot be picked out.'],
+  flags:[['unresolved','Too many namesakes to identify with confidence']],
+  sources:[['Birth certificate 1884 (PDF)', IG+'/files/civil/birth_returns/births_1884/02703/1995333.pdf'],
+    ['Baptism register (PDF)', IG+'/files/church/st.marys_pro-cathedral_mf_1880-1889_ba_0461.pdf']]},
+
+k4: {name:'John Kavanagh', gen:3, line:'kavanagh', conf:C.u, parent:'JK',
+  role:'Scholar in 1901', dates:'1887 – ?',
+  summary:'Fourteen and at school in 1901. Like his brother, untraceable afterwards.',
+  facts:[['Born','3 February 1887'],['Baptised','Pro-Cathedral'],['Family home','31 Little Strand Street'],
+    ['Godmother','Rebecca Walsh'],['1901 census','Aged 14, Scholar'],
+    ['Married','Not found — around 150 John Kavanaghs married in Dublin 1904–1922'],
+    ['Died','Not found — one of 599 candidates']],
+  flags:[['unresolved','Too many namesakes to identify with confidence']],
+  notes:[],
+  sources:[['Birth certificate 1887 (PDF)', IG+'/files/civil/birth_returns/births_1887/02572/1951014.pdf'],
+    ['Baptism register (PDF)', IG+'/files/church/st.marys_pro-cathedral_mf_1880-1889_ba_0778.pdf']]},
+
+/* ---- Generation 4 ---- */
+t1: {name:'William Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1900',
+  role:'', summary:'Born at the Rotunda Maternity Hospital, four months after his parents married. Named for his grandfather.',
+  facts:[['Born','20 December 1900'],['Born at','The Rotunda Maternity Hospital'],['Family home','152 Britain Street'],
+    ['1901 census','Aged 0'],['1911 census','Aged 10, scholar, Irish and English speaker'],
+    ['1921 census','Aged 20 years 6 months, the Wynd, Cumbernauld — Brickworker, J. G. Stein &amp; Co Ltd, brick manufacturers']],
+  notes:['He and his brother Thomas John are recorded in 1911 as speaking both Irish and English — the only members of the household who are.'],
+  sources:[['Birth certificate 1900 (PDF)', IG+'/files/civil/birth_returns/births_1900/01976/1761349.pdf']]},
+
+t2: {name:'James Valentine', gen:4, line:'both', conf:C.u, parent:'v7', dates:'b. 1902',
+  role:'', summary:'Born in 1902 and gone by 1911 — the missing child in the census arithmetic. No death record has been found.',
+  facts:[['Born','31 March 1902'],['Family home','32 Lower Dorset Street'],['Died','Before April 1911 — no record found']],
+  notes:['The 1911 census records seven children born and six living. Comparing that list against the birth records, James is the one who is missing. A search of infant Valentine deaths in Dublin from 1900 to 1911 turned up no relevant match.'],
+  flags:[['unresolved','Death inferred from the census, but no record found']],
+  sources:[['Birth certificate 1902 (PDF)', IG+'/files/civil/birth_returns/births_1902/01912/1741388.pdf']]},
+
+t3: {name:'Thomas John Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1903',
+  role:'', summary:'Recorded in the 1911 census as “John T”.',
+  facts:[['Born','4 November 1903'],['Family home','6 O’Sullivan Avenue'],['1911 census','Aged 7, scholar, Irish and English speaker'],
+    ['1921 census','Aged 17 years 8 months, the Wynd, Cumbernauld — Brickwork panman, Castlecary Fireclay Co']],
+  notes:['His birth was registered at “O’Sullivan’s Avenue” — an error the registrar repeated for several of this family’s births. The street is O’Sullivan Avenue.'],
+  sources:[['Birth certificate 1903 (PDF)', IG+'/files/civil/birth_returns/births_1903/01851/1721317.pdf']]},
+
+t4: {name:'Martha Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1905',
+  role:'', summary:'Named for her grandmother, who had died five years before she was born.',
+  facts:[['Born','7 September 1905'],['Family home','2 St Mary’s Terrace'],['1911 census','Aged 5'],
+    ['1921 census','Aged 15 years 9 months, the Wynd, Cumbernauld — “Sheet Worker”, J &amp; A. Campbell &amp; Co., warehousemen']],
+  notes:[], sources:[['Birth certificate 1905 (PDF)', IG+'/files/civil/birth_returns/births_1905/01763/1694303.pdf']]},
+
+t5: {name:'Louis Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1907',
+  role:'', summary:'Named for his uncle, the compositor.',
+  facts:[['Born','27 March 1907'],['Family home','2 St Mary’s Terrace'],['1911 census','Aged 4'],
+    ['1921 census','Aged 14 years 3 months, the Wynd, Cumbernauld — Scholar']],
+  notes:[], sources:[['Birth certificate 1907 (PDF)', IG+'/files/civil/birth_returns/births_1907/01699/1673975.pdf']]},
+
+t6: {name:'Robert Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1908',
+  role:'', summary:'Born in November 1908, six weeks before his grandfather William died.',
+  facts:[['Born','13 November 1908'],['Family home','2 St Mary’s Terrace'],['Registered','1909'],['1911 census','Aged 2'],
+    ['1921 census','Aged 12 years 9 months, the Wynd, Cumbernauld — Scholar']],
+  notes:[], sources:[['Birth certificate (PDF)', IG+'/files/civil/birth_returns/births_1909/01625/1650607.pdf']]},
+
+t7: {name:'Walter Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1910',
+  role:'', summary:'Named for the uncle who died of typhus at thirteen.',
+  facts:[['Born','20 February 1910'],['Family home','22 Ballybough Road'],['1911 census','Aged 1'],
+    ['1921 census','Aged 11 years 6 months, the Wynd, Cumbernauld — Scholar']],
+  notes:[], sources:[['Birth certificate 1910 (PDF)', IG+'/files/civil/birth_returns/births_1910/01583/1637190.pdf']]},
+
+t8: {name:'Thomas Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1911',
+  role:'', summary:'Born seven months after the 1911 census. His grandmother Anne Kavanagh was present at the birth.',
+  facts:[['Born','14 November 1911'],['Family home','2 O’Sullivan Avenue'],
+    ['Present at birth','Anne Kavanagh, of 177 Great Britain Street'],
+    ['1921 census','Aged 10 years 1 month, the Wynd, Cumbernauld — Scholar']],
+  notes:['This is the last firm sighting but one of Anne Kavanagh, his grandmother — a woman who cannot be found in the census taken earlier that same year.'],
+  sources:[['Birth certificate 1911 (PDF)', IG+'/files/civil/birth_returns/births_1911/01519/1616867.pdf']]},
+
+t9: {name:'Frank Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1913',
+  role:'', summary:'Later died in Cumbernauld, Scotland — the clearest sign of where this family went next.',
+  facts:[['Born','20 March 1913'],['Family home','2 O’Sullivan Avenue'],['Later','Died in Cumbernauld, Scotland'],
+    ['1921 census','Aged 8 years 9 months, the Wynd, Cumbernauld — Scholar']],
+  notes:[], sources:[['Birth certificate 1913 (PDF)', IG+'/files/civil/birth_returns/births_1913/01453/1593648.pdf']]},
+
+t10: {name:'Anne Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1914',
+  role:'', summary:'Named for her mother. Her grandmother Anne Kavanagh, then at 22 Kings Avenue, was recorded at the birth.',
+  facts:[['Born','4 September 1914'],['Family home','2 O’Sullivan Avenue'],
+    ['Grandmother’s address','Anne Kavanagh, 22 Kings Avenue'],
+    ['1921 census','Aged 7 years 1 month, the Wynd, Cumbernauld — Scholar']],
+  notes:[], sources:[['Birth certificate 1914 (PDF)', IG+'/files/civil/birth_returns/births_1914/01396/1573957.pdf']]},
+
+t11: {name:'Elizabeth Valentine', gen:4, line:'both', conf:C.y, parent:'v7', dates:'b. 1915',
+  role:'', summary:'The last of the family to be born in Dublin, in the middle of the First World War.',
+  facts:[['Born','17 November 1915'],['Family home','2 O’Sullivan Avenue, “near Ballybough Road”'],['Registered','1916'],
+    ['1921 census','Aged 5 years 8 months, the Wynd, Cumbernauld — Scholar']],
+  notes:['The last of the family to be born in Dublin. Within about three years they were in Scotland.'],
+  sources:[['Birth certificate (PDF)', IG+'/files/civil/birth_returns/births_1916/01353/1558039.pdf']]},
+
+t12: {name:'Brendon Valentine', gen:4, line:'both', conf:C.p, parent:'v7', dates:'b. 1919',
+  role:'', summary:'The first of the family born in Scotland. His arrival is what dates the emigration.',
+  facts:[['Born','1919 — calculated from a census age, no certificate yet'],['Born at','Cumbernauld, Dunbartonshire'],
+    ['1921 census','Aged 2 years 3 months, at the Wynd, Cumbernauld']],
+  notes:['His age in the 1921 census — 2 years and 3 months on 19 June 1921 — points to about March 1919. Treat that loosely: the same enumerator overstated his five youngest Irish-born siblings’ ages by two to seven months, so Brendon may well have been born later in 1919. Either way, Elizabeth was born in Dublin in November 1915 and Brendon at Cumbernauld, so the family crossed between those two points.',
+    'The enumerator wrote <b>Brendon</b>, though in this hand the final letter could as easily be an a — Brendan is possible. The birth registration would settle it.'],
+  flags:[['probable','Date of birth calculated from a census age — no birth registration seen yet']],
+  sources:[['1921 census of Scotland, Cumbernauld 495/9/19', SP]]},
+
+t13: {name:'Mary Valentine', gen:4, line:'both', conf:C.p, parent:'v7', dates:'b. 1920',
+  role:'', summary:'The thirteenth and last child, eight months old at the 1921 census and the second born in Scotland.',
+  facts:[['Born','1920 — calculated from a census age, no certificate yet'],['Born at','Cumbernauld, Dunbartonshire'],
+    ['1921 census','Aged 8 months, at the Wynd, Cumbernauld']],
+  notes:['She shares her name with an aunt — Thomas’s youngest sister Mary, who had probably died of tuberculosis in 1910 at nineteen.'],
+  flags:[['probable','Date of birth calculated from a census age — no birth registration seen yet']],
+  sources:[['1921 census of Scotland, Cumbernauld 495/9/19', SP]]}
+};
+
+const TIMELINE = [
+  {y:'c.1842', t:'William Valentine born', d:'No record survives — civil registration of births in Ireland did not begin until 1864.', tag:'unresolved'},
+  {y:'c.1846', t:'Martha Mackey born', d:'A baptism of “Martha Herbert” that year, with Patrick and Catherine Mackey as sponsors, is the best candidate.', tag:'probable'},
+  {y:'c.1847', t:'James Kavanagh born', d:'Estimated from his age of 54 in the 1901 census.', tag:'unresolved'},
+  {y:'c.1857', t:'Anne Walsh born', d:'Estimated from her age of 44 in the 1901 census.', tag:'unresolved'},
+  {y:'1863', t:'William Valentine marries Martha Mackey', d:'3 August, St Mary’s Pro-Cathedral. He was recorded as “of full age” — about twenty-one — and she was 17 and a minor. Both worked in the book trade — he a bookbinder, she a bookfolder.', tag:'confirmed', key:true},
+  {y:'1864', t:'Elizabeth, the first child, born', d:'15 June, at 14 Gloucester Place. Baptised Roman Catholic at the Pro-Cathedral.', tag:'confirmed'},
+  {y:'1869', t:'Martha born', d:'17 July, at 22 Sandwith Place. The last child baptised Roman Catholic.', tag:'confirmed'},
+  {y:'1871', t:'The family changes church', d:'William Thomas, born 12 September, is the first child baptised at St George’s, Church of Ireland. Every subsequent child follows.', tag:'confirmed', key:true},
+  {y:'1873', t:'James Kavanagh marries Anne Walsh', d:'4 August, St Mary’s Pro-Cathedral. He was a 26-year-old widower and a railway guard; she was 16. Their fathers lived a few doors apart on Jervis Street.', tag:'confirmed', key:true},
+  {y:'1873', t:'The Valentines move to Portland Place', d:'Robert is born on 15 December at 30 Portland Place, where the family stays for the next seventeen years.', tag:'confirmed'},
+  {y:'1879', t:'William Thomas dies, aged 8', d:'3 October, of meningitis.', tag:'confirmed'},
+  {y:'1880', t:'Patrick Kavanagh born and dies', d:'Born 28 January, died 28 February of severe malnutrition, aged one month.', tag:'confirmed'},
+  {y:'1881', t:'Thomas Valentine born', d:'18 April, at 31 Portland Place. Baptised at St George’s, Church of Ireland.', tag:'confirmed', key:true},
+  {y:'1882', t:'Anne Kavanagh born', d:'13 March, at 128 Upper Abbey Street. Her father, a porter, is recorded on the registration as illiterate.', tag:'confirmed', key:true},
+  {y:'1886', t:'Ruth Florence dies, aged 2', d:'11 April, of diphtheria.', tag:'confirmed'},
+  {y:'1894', t:'Two Valentine weddings', d:'Robert marries Mary Ellen McCarthy in July; Martha marries Laurence Byrne, a gardener, in November.', tag:'confirmed'},
+  {y:'1899', t:'Walter William dies, aged 13', d:'11 August, of typhus.', tag:'confirmed'},
+  {y:'1900', t:'A summer of weddings and a funeral', d:'Louis marries on 5 July. Martha, the mother of the family, dies on 10 July aged 54. Thomas marries Anne Kavanagh on 5 August.', tag:'confirmed', key:true},
+  {y:'1900', t:'William Valentine born', d:'20 December, at the Rotunda Maternity Hospital — the first of Thomas and Anne’s thirteen children.', tag:'confirmed'},
+  {y:'1901', t:'The census catches all three households', d:'William the widower at Oxmantown Road with five of his children; James Kavanagh at Little Denmark Street; Thomas and Annie, newly married, at 152 Great Britain Street with their baby son.', tag:'confirmed', key:true},
+  {y:'1908', t:'William Valentine dies, aged 67', d:'29 December, at 27 Ross Street, of pulmonary tuberculosis. His son Thomas was present at the death and gave the information.', tag:'confirmed', key:true},
+  {y:'1911', t:'Thomas’s family at 22 Ballybough Road', d:'He is now a Foreman Bookbinder Finisher. The return records ten years of marriage, seven children born and six living.', tag:'confirmed'},
+  {y:'1913–16', t:'The last three children born', d:'Frank, Anne and Elizabeth arrive at 2 O’Sullivan Avenue.', tag:'confirmed'},
+  {y:'1916–19', t:'The family leaves for Scotland', d:'Elizabeth was born at 2 O’Sullivan Avenue in November 1915; Brendon was born at Cumbernauld in 1919. They crossed somewhere between those two points — through the Rising, the Great War and the beginning of the War of Independence.', tag:'probable', key:true},
+  {y:'1919', t:'Brendon born in Cumbernauld', d:'The first of the family born in Scotland. The date is calculated from his census age, not from a certificate.', tag:'probable'},
+  {y:'1920', t:'Mary born in Cumbernauld', d:'The thirteenth and last child. Eight months old at the census.', tag:'probable'},
+  {y:'1921', t:'Martha Byrne dies, aged 50', d:'13 June, of asthenia, working as a house maid — but recorded as a spinster rather than a widow.', tag:'probable'},
+  {y:'1921', t:'Fourteen people in two rooms', d:'The census of 19 June finds the whole household at the Wynd, Cumbernauld Village. Thomas, once a foreman bookbinder, is now a railway porter for the North British Railway Company. William and Thomas John are working in the brick and fireclay works of the district; Martha is in a warehouse; seven of the children are still at school.', tag:'confirmed', key:true},
+  {y:'1937', t:'Thomas Valentine dies', d:'12 October.', tag:'confirmed'},
+  {y:'1958', t:'Anne Kavanagh dies', d:'18 June, outliving her husband by twenty-one years.', tag:'confirmed'}
+];
+
+const PLACES = {
+  thomas: {label:'Thomas Valentine & Anne Kavanagh', sub:'Six Dublin addresses in sixteen years, then Scotland', color:'#8c5a2b', rows:[
+    ['1900–1901','152 Great Britain Street','Their first home. Now Parnell Street — renamed in 1911. William was born at the nearby Rotunda.',53.353320,-6.260195,'renamed','house','med','https://www.google.com/maps/@53.3531493,-6.2601372,3a,75y,135.87h,90t/data=!3m7!1e1!3m5!1sQjPhRrFiUIw5lV9hpIG1YQ!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D0%26panoid%3DQjPhRrFiUIw5lV9hpIG1YQ%26yaw%3D135.87374495188425!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D'],
+    ['1902','32 Lower Dorset Street','James born here. The street survives; whether this house does is uncertain.',53.358986,-6.261902,'extant','house','med'],
+    ['1903','6 O’Sullivan Avenue','Thomas John born here. Registered in error as “O’Sullivan’s Avenue”.',53.360280,-6.245160,'extant','house','med'],
+    ['1905–1908','2 St Mary’s Terrace','Martha, Louis and Robert born here. A “St Mary’s Terrace, Ballybough Road” existed in 1911, but the exact spot is not established.',53.359500,-6.245500,'uncertain','approx','low'],
+    ['1910–1911','22 Ballybough Road','Walter born here; the address on the 1911 census. Much of the road’s Victorian housing has since been replaced.',53.359600,-6.245200,'extant','street','med'],
+    ['1911–1916','2 O’Sullivan Avenue','Thomas, Frank, Anne and Elizabeth born here. The red-brick artisan terrace still stands.',53.360070,-6.244830,'extant','house','med'],
+    ['c.1919–1921','The Wynd, Cumbernauld','Scotland. Fourteen people in two rooms at the 1921 census. Two of the houses on this lane, Nos 18 and 20, are listed buildings — the family may well have lived in something still standing.',55.962840,-3.974990,'extant','street','high']]},
+
+  william: {label:'William Valentine & Martha Mackey', sub:'From Marlborough Street to a death in Stoneybatter', color:'#3f6b57', rows:[
+    ['1863','93 Marlboro Street','His address at the marriage. The house survives — an eighteenth-century four-storey house on Marlborough Street, now the Compassion Centre.',53.349803,-6.258281,'extant','house','high'],
+    ['1863','134 Great Britain Street','Her address at the marriage. The summary chart in the original spreadsheet gives 153 instead, and the two have not been reconciled.',53.353920,-6.258819,'renamed','approx','low'],
+    ['1864','14 Gloucester Place','Elizabeth born here. Three separate Gloucester Places existed, and the whole quarter — the Monto — was cleared by the Corporation between the 1940s and 1981.',53.352844,-6.254838,'demolished','approx','low'],
+    ['1869','22 Sandwith Place','Martha born here, well south of the family’s usual patch. The lane was cleared in the 1930s for Pearse House.',53.343918,-6.245472,'demolished','approx','med'],
+    ['1871','13 Summer Street','William Thomas born here. Summer Street North — and the c.1820 terrace at Nos 11–19 that contains No. 13 — still stands.',53.357182,-6.252227,'extant','house','med'],
+    ['1873–1890','30–31 Portland Place','Home for seventeen years and eight children. The street survives off Lower Dorset Street, but where Nos 30–31 stood within it is not established.',53.360816,-6.257958,'extant','street','low'],
+    ['1901','Oxmantown Road','The widower’s household in the census — a Dublin Artisans’ Dwellings Company cottage terrace of the 1880s, still intact.',53.354027,-6.292108,'extant','house','med'],
+    ['1908','27 Ross Street','Where he died. A short side street off Oxmantown Road, same cottage scheme, still there.',53.354400,-6.293170,'extant','street','med']]},
+
+  kavanagh: {label:'James Kavanagh & Anne Walsh', sub:'Five addresses in twenty years, most of them now gone', color:'#5a4a7a', rows:[
+    ['1873','37 Jervis Street','His father’s house. Almost nothing of nineteenth-century Jervis Street survives; the block south of Mary Street is now the Jervis Shopping Centre.',53.349915,-6.267030,'demolished','approx','low'],
+    ['1873','31 Jervis Street','Her father’s house — a few doors away, which is very likely how James and Anne met.',53.349462,-6.266844,'demolished','approx','low'],
+    ['1880','23 Cumberland Street','Patrick born and died here. Cumberland Street North survives — it is the street of the open-air second-hand market — but this quarter was largely cleared.',53.353460,-6.258050,'extant','street','low'],
+    ['1882','128 Upper Abbey Street','Anne born here. The house is gone: this end of the street is now the Jervis Centre frontage.',53.347783,-6.265587,'demolished','approx','med','https://www.google.com/maps/@53.347674,-6.2657427,3a,75y,297.39h,88.35t/data=!3m7!1e1!3m5!1sZFG_o9_EGVl49a3bm5DPgw!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D1.6536346643106015%26panoid%3DZFG_o9_EGVl49a3bm5DPgw%26yaw%3D297.3877447616752!7i16384!8i8192?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D'],
+    ['1884','9 Upper Abbey Street','James born here, about a fifth of the way along from Capel Street.',53.347951,-6.266841,'extant','house','med'],
+    ['1887','31 Little Strand Street','John born here, a short way west of the Capel Street corner. That corner block has recently been redeveloped.',53.346500,-6.269100,'extant','street','med'],
+    ['1900','30 Denmark Street','Anne’s address at her marriage — almost certainly Little Denmark Street, since Great Denmark Street’s numbering stops around 21.',53.351000,-6.264300,'demolished','approx','med'],
+    ['1901','30 Little Denmark Street','The household in the census. The street was erased in 1976–78 for the Ilac Centre; the site is now inside the shopping centre, near the city library.',53.351000,-6.264300,'demolished','approx','med']]},
+
+  other: {label:'Other addresses in the records', sub:'Weddings, witnesses and one unresolved sighting', color:'#8a6f4a', rows:[
+    ['1863','18 Greenville Street','Patrick Mackey’s address. There is no Greenville Street in Dublin — only Greenville Terrace and Greenville Avenue, both off the South Circular Road. Which one is unresolved.',53.332970,-6.278743,'uncertain','approx','low'],
+    ['1894','30 Portland Row','Martha Valentine’s address at her marriage to Laurence Byrne. Pinned near No. 21; No. 30 belongs to the street’s later extension.',53.355725,-6.248442,'extant','street','low'],
+    ['1894','40 O’Connell Avenue','Robert Valentine’s address at his marriage. A late-Victorian terrace in Phibsborough, still standing.',53.358200,-6.270500,'extant','street','med'],
+    ['1900','42 Hardwicke Street','Louis Valentine’s address at his marriage. Only a handful of the original Georgian houses survive, all at the southern end; No. 42 is not among them.',53.355928,-6.264189,'demolished','house','med'],
+    ['1903','25 Oxmantown Road','Elizabeth Valentine’s address at her marriage to Matthew Byrne — the same street the family had been living on in 1901.',53.354027,-6.292108,'extant','street','med'],
+    ['1911','177 Great Britain Street','Where Anne Kavanagh was living when she attended her grandson’s birth. Position along Parnell Street is approximate.',53.352900,-6.262000,'renamed','approx','low'],
+    ['1911','13 Wood Lane','Where a Martha Byrne, 40, widow, and Martha Lillian Byrne, 13, were boarding. A tenement lane off Benburb Street, entirely swept away.',53.347600,-6.281700,'demolished','approx','low'],
+    ['1914','22 Kings Avenue','Anne Kavanagh’s address at her granddaughter’s birth — her last known sighting. The street still exists off Ballybough Road, but no coordinate for it could be established.',null,null,'extant','none','none']]}
+};
+
+const CHURCHES = [
+  ['St Mary’s Pro-Cathedral','Marlborough Street','Four of the marriages in this tree, and the Roman Catholic baptisms on both sides. Still in full use.',53.350893,-6.259092],
+  ['St George’s, Church of Ireland','Hardwicke Place','Every Valentine baptism from 1871 to 1890, including Thomas’s. Deconsecrated in 1990; after a spell as a nightclub it is now offices — the Francis Johnston spire still stands.',53.357337,-6.262795],
+  ['St Joseph’s','Berkeley Road','Marriage of Robert Valentine, 1894. Consecrated 1880; in Carmelite care since 1983.',53.358156,-6.268540],
+  ['St Agatha’s','North William Street','Marriage of Martha Valentine, 1894. Built slowly between 1878 and 1908 on a cramped back-street site.',53.356815,-6.246204],
+  ['Church of the Holy Family','Aughrim Street','Marriage of Elizabeth Valentine, 1903. Before independence this was the official church of the Royal Irish Constabulary.',53.354657,-6.288843]
+];
+
+const LANDMARKS = [
+  ['The Rotunda Hospital','Parnell Square East','Where William, the eldest of Thomas and Anne’s thirteen children, was born in December 1900. Founded 1745 and on this site since 1757 — the oldest continuously working maternity hospital in the world.',53.352600,-6.262600],
+  ['Galwey & Co, bookbinders','22 Eustace Street','A substantial Dublin bindery of the period, and the sort of place a book finisher might have worked. The building survives in Temple Bar, complete with its Victorian shopfront.',53.344801,-6.264656]
+];
+
+const QUESTIONS = [
+  {p:1, q:'Where and when was William Valentine born?', d:'The oldest unanswered question in the tree. There is no birth or baptism record because civil registration began in 1864, and the closest candidate — a William Valentine born in Dublin in 1840 to John and Charlotte — was rejected. His parents were William, a railway clerk, and Elizabeth, of 93 Marlboro Street.',
+   n:'The 1841 and 1851 census search forms, created for Old Age Pension claims after 1908, are the standard route round this problem. William could never have claimed one himself: he was 67 when he died in December 1908, three years short of the qualifying age of 70, and the scheme only began the following month. But a sibling or cousin who did claim would have named the same parents and the same 1841 or 1851 address.'},
+  {p:1, q:'Why was Martha baptised as Martha Herbert?', d:'The 1846 baptism has the right year and the right sponsors — Patrick and Catherine Mackey, the names she gave as her parents at her wedding — but the wrong surname. No Martha Mackey was born anywhere in Ireland in the surrounding years.',
+   n:'Worth testing whether Herbert was a first husband’s name of Catherine’s, a stepfather situation, or an illegitimacy later regularised. The full register page around the entry may show a pattern.'},
+  {p:1, q:'Who was James Kavanagh’s first wife — and are there half-siblings?', d:'He is described as a widower at his 1873 marriage, aged about 26. That implies an earlier marriage in the 1860s or early 1870s and possibly children, none of whom have been looked for.',
+   n:'An entire unexplored branch. A search for Kavanagh/Cavanagh marriages in north Dublin 1866–1872 with a John Kavanagh, coachman, as father would be the place to start.'},
+  {p:1, q:'Where did James and Anne Kavanagh go after 1901?', d:'Neither appears in the 1911 census. No James Kavanagh of the right age is married to an Anne; the only close-aged James is 60 and married to a Sarah. No Anne Kavanagh in the range is a widow, and no Anne Walsh fits either.',
+   n:'Anne was demonstrably still alive — she was present at her grandson’s birth in November 1911 at 177 Great Britain Street, and at 22 Kings Avenue in 1914. Working backwards from those two addresses through the 1911 census street returns may find her under a mangled name.'},
+  {p:2, q:'What became of Hannah Valentine?', d:'Aged 22 in 1901, unmarried, no occupation. No marriage record, no death record, nothing after that.', n:'Emigration is the obvious explanation. Passenger lists and Scottish or English records are worth a look, especially given where the rest of the family ended up.'},
+  {p:2, q:'What became of Reuben John Valentine?', d:'A scholar of 13 in 1901. No marriage or death record has been found, and searches under John Valentine as well as Reuben John came up empty.', n:'Same as Hannah — consider emigration, and consider that he may have used only one of his two forenames as an adult.'},
+  {p:2, q:'Is the 1921 Martha Byrne death the right one?', d:'The age fits perfectly — 50, born 1869 — and asthenia and house maid are plausible. But the record says spinster, and Martha was a widow by 1901.', n:'The 1911 census entry for a Martha Mary Byrne, 40, widow, and Martha Lillian Byrne, 13, boarding at 13 Wood Lane may be her and her daughter. If that is confirmed, the 1921 record can be tested against it.'},
+  {p:2, q:'Is the 1910 Mary Valentine death the right one?', d:'The contemporaneous note reads “not convinced”. The occupation is unclear and the possibility that Isabella was a confirmation name was raised but not resolved.', n:'Check whether any other Mary Valentine of about 19 died in Dublin around then, and look for a burial record that names the parents.'},
+  {p:2, q:'Where is the death of James Valentine, born 1902?', d:'The 1911 census arithmetic — seven children born, six living — says he died before April 1911. A search of infant Valentine deaths in Dublin between 1900 and 1911 found nothing relevant.',
+   n:'Consider that the death may have been registered under a variant surname, or that the family had already made a first move outside Dublin.'},
+  {p:1, q:'Where are Brendon’s and Mary’s birth registrations?', d:'The 1921 census gives their ages as 2 years 3 months and 8 months, which puts their births around March 1919 and October 1920, at Cumbernauld. Neither certificate has been seen, so both dates are calculated rather than documented — and Brendon’s in particular would pin down when the family actually arrived.',
+   n:'Scottish statutory birth registers for Cumbernauld, district 495, 1919 and 1920. These will also give Thomas’s occupation at each date, which may show whether he was already on the railway when he arrived.'},
+  {p:2, q:'What took them to Cumbernauld, and when exactly?', d:'The window is now narrow — between November 1915 and 1919. That covers the Rising, conscription-era Britain and the start of the War of Independence. Cumbernauld is an odd destination: a village, not a city, with brickworks and a railway rather than a book trade.',
+   n:'The Castlecary and Bonnybridge fireclay works drew labour from Ireland, and the North British Railway ran through Castlecary — that combination is probably the pull. Valuation rolls for Cumbernauld and any surviving railway staff registers would date his employment.'},
+  {p:2, q:'Why did Thomas give up the book trade?', d:'A foreman bookbinder finisher in Dublin in 1911; a railway porter in Cumbernauld in 1921. That is a substantial step down in skill and status, and it ends three generations in the trade.',
+   n:'Worth checking whether the Dublin bindery he worked for closed, and whether he could have found finishing work in Scotland at all. His 1937 death certificate will give a final occupation.'},
+  {p:2, q:'Where did Thomas and Anne die?', d:'The tree gives 12 October 1937 and 18 June 1958, but neither has a source attached and neither has been checked against a certificate. On the evidence, both deaths are far more likely to be Scottish than Irish.',
+   n:'Scottish statutory death registers. The certificates will confirm the dates, give the addresses, and — for Anne in 1958 — name an informant who is probably one of the thirteen children.'},
+  {p:3, q:'Were Mary Ellen and Christina McCarthy sisters?', d:'Robert Valentine married Mary Ellen McCarthy in 1894; his brother Louis married Christina McCarthy in 1900. The research notes flag “2 sisters?” against both entries.', n:'Both marriage certificates name the fathers. If the fathers match, that settles it in a single check.'},
+  {p:3, q:'Was Thomas baptised a second time as a Roman Catholic?', d:'He was baptised at St George’s, Church of Ireland, in April 1881, but was married in the Pro-Cathedral as a Catholic in 1900 and recorded as Roman Catholic in the 1901 census. The notes suggest a Catholic baptism around age eleven.', n:'Pro-Cathedral baptism registers for roughly 1892 would confirm it.'},
+  {p:3, q:'Who were Robert Valintine and Mary Markey?', d:'They stood as sponsors at Martha’s 1869 baptism. The spellings are variants of Valentine and Mackey, which makes them relatives on both sides — but which relatives is unknown.', n:'A sibling of William, and a sibling of Martha, are the obvious guesses. Either would be the first lateral relatives identified in this generation.'},
+  {p:3, q:'Which Elizabeth Byrne is ours?', d:'Elizabeth Valentine married Matthew J Byrne in 1903. Roughly 794 Elizabeth Byrnes died in Ireland between 1903 and 1954.', n:'Narrowing by parish, by address, or by finding the couple in the 1911 census would cut that number dramatically.'},
+  {p:3, q:'A date to correct', d:'The summary chart in the original spreadsheet gives William Valentine’s death as 29 December 1906. The death certificate itself is dated 29 December 1908 and the record is filed in the 1908 returns.', n:'1908 is correct — the certificate has been read directly. The 1906 in the chart is a typing slip.'}
+];
+
+const RECORDS = [
+{title:'The two founding marriages', blurb:'St Mary’s Pro-Cathedral, ten years and one day apart.',
+ items:[
+  {h:'William Valentine & Martha Mackey — 3 August 1863', m:'Church register · Pro-Cathedral, Roman Catholic', imgs:['image3','image4'],
+   cap:'Both parties are named with their fathers: William Valentine, railway clerk, of 93 Marlboro Street, and Patrick Mackey, coach maker, of 18 Greenville Street. He is “of full age”; she is a minor.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=707108e3c7-312'},
+  {h:'William Valentine & Martha Mackey — civil return', m:'Civil registration · 1863', imgs:['image2'],
+   cap:'The state’s copy of the same marriage. Names match, ages fit the 1901 census, professions fit, and the church fits the Catholic side of the family.',
+   link:'https://www.irishgenealogy.ie/files/civil/marriage_returns/marriages_1863/09649/5499445.pdf'},
+  {h:'James Kavanagh & Anne Walsh — 4 August 1873', m:'Church register and civil return', imgs:['image5','image6'],
+   cap:'He is a railway guard and a widower at 26; she is a cloakmaker of 16, a minor. The civil copy spells the surname Cavanagh — the addresses and dates confirm it is the same event.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=707108e3c7-3444'}]},
+
+{title:'Births and baptisms', blurb:'The documents that fix each person to a date, a street and a parish.',
+ items:[
+  {h:'Martha Herbert — 1846', m:'Baptism · possible identification for Martha Mackey', imgs:['image1'],
+   cap:'The year is right for Martha Mackey based on her death certificate, and the sponsors were Patrick and Catherine Mackey — the names she gave as her parents at her wedding. The surname Herbert remains unexplained.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=c963d01f6e-9829'},
+  {h:'Thomas Valentine — 18 April 1881', m:'Baptism · St George’s, Church of Ireland, Hardwicke Place', imgs:['image7'],
+   cap:'Father William Valentine, bookbinder, of 31 Portland Place. No image of the civil birth registration survives — it may be corrupted, though the original could still be viewable in Dublin.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=19d58ec1c8-10756'},
+  {h:'Anne Kavanagh — 13 March 1882', m:'Civil birth registration and Pro-Cathedral baptism', imgs:['image8','image9','image10','image11'],
+   cap:'Father James Kavanagh, porter, of 128 Upper Abbey Street, recorded as illiterate; mother Annie Walsh. The only Anne Kavanagh born in 1881–83 with the right parents, the right district and the right church.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=5fc6443d7a-4683128'},
+  {h:'Reuben John Valentine — 5 January 1888', m:'Civil birth registration', imgs:['image20','image19'],
+   cap:'Father William Valentine, bookbinder; mother Martha Mary Valentine, formerly Markey; 30 Portland Place. This is the record that proved the Oxmantown Road census household was the right family.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=5fc6443d7a-3891754'},
+  {h:'Reuben John Valentine — baptism', m:'St George’s, Church of Ireland, 1888', imgs:['image22','image21'],
+   cap:'The parish register entry: parents William and Martha, abode 30 Portland Place, trade book-binder.',
+   link:'https://www.irishgenealogy.ie/files/church/d-298-2-9-096.pdf'}]},
+
+{title:'The marriage that joined the families', blurb:'5 August 1900, St Mary’s Pro-Cathedral.',
+ items:[
+  {h:'Thomas Valentine & Anne Kavanagh — church register', m:'Liber Matrimoniorum · Pro-Cathedral, 1900', imgs:['image13','image14'],
+   cap:'The Latin marriage register of the Pro-Cathedral for 1900.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=76e681dcc3-5778'},
+  {h:'Thomas Valentine & Anne Kavanagh — civil return', m:'Civil registration · 5 August 1900', imgs:['image15','image16'],
+   cap:'Thomas Valentine, bachelor, of 30 Portland Place, father William Valentine. Annie Kavanagh, spinster, of 30 Denmark Street, father James Kavanagh. Witnesses Edward Moore and Lizzie Geeling; married by Augustine Farrell.',
+   link:'https://www.irishgenealogy.ie/files/civil/marriage_returns/marriages_1900/10355/5769507.pdf'}]},
+
+{title:'Deaths', blurb:'Two certificates that pin down the older generation.',
+ items:[
+  {h:'Martha Valentine — 10 July 1900', m:'Civil death registration · 30 Portland Place', imgs:['image12'],
+   cap:'Aged 54, “Bookbinder’s Wife”, cause of death cardiac asthenia — heart exhaustion. Her husband is a widower by the following census, and the address and profession match exactly.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=0c9e5f72a2-3909054'},
+  {h:'William Valentine — 29 December 1908', m:'Civil death registration · 27 Ross Street', imgs:['image25','image24'],
+   cap:'Recorded as William Thomas Valentine, widower, 67, book-binder. Cause: phthisis pulmonalis, certified. Informant: “Thomas Valentine, son, present at death, 2 St Mary’s Terrace, Ballybough Road.” Note the year — the summary chart in the original spreadsheet gives 1906, but the certificate is unambiguously 1908.',
+   link:'https://www.irishgenealogy.ie/view/?record_id=0c9e5f72a2-3184848'}]},
+
+{title:'The census returns', blurb:'Three snapshots of the households in this tree — two Irish, one Scottish.',
+ items:[
+  {h:'1901 — Oxmantown Road, Arran Quay', m:'William Valentine, widower, 59, bookbinder', imgs:['image18'],
+   cap:'The household: William 59 (Church of Ireland); Elizabeth 36, bookfolder (Wesleyan); Martha Byrne 31, widow, bookfolder (Roman Catholic); Hannah 22; Reuben 13; Mary 11; and granddaughter Martha Byrne, 3. Three religions under one roof.',
+   link:'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=valentine&firstname__icontains=william&id=5200084'},
+  {h:'1901 — Little Denmark Street, North City', m:'James Kavanagh, 54, general labourer', imgs:['image17'],
+   cap:'James 54 and Anne 44, with sons James 17 (general labourer) and John 14 (scholar), plus a nephew, Patrick Walsh, 23, a plumber and gasfitter — and, unusually for this household, Church of Ireland.',
+   link:'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=kavanagh&firstname__icontains=james&county=Dublin&religion_updated=Roman+Catholic&townland=Little+Denmark+Street&id=5190883'},
+  {h:'1901 — 152 Great Britain Street, Rotunda', m:'Thomas Valentine, 19, book finisher', imgs:['image23'],
+   cap:'Thomas 19, Annie 18, and William, aged 0. Married eight months, with a three-month-old son. Thomas is recorded as “R C Church” — despite his Church of Ireland baptism.',
+   link:'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1901&surname__icontains=valentine&firstname__icontains=thomas&id=5180096'},
+  {h:'1911 — 22 Ballybough Road, Mountjoy', m:'Thomas Valentine, 29, foreman bookbinder finisher', imgs:['image26'],
+   cap:'Ten years married; seven children born, six living. William 10, John T 7, Martha 5, Louis 4, Robert 2, Walter 1. The two eldest boys are recorded as speaking Irish and English.',
+   link:'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1911&surname__icontains=valentine&firstname__icontains=william&id=48711'},
+  {h:'1911 — 13 Wood Lane, Arran Quay', m:'A possible sighting of Martha Byrne and her daughter', imgs:['image27'],
+   cap:'A boarding house of laundresses and needlewomen. Martha Mary Byrne, 40, widow, nurse domestic, and Martha Lillian Byrne, 13, scholar — plausibly William’s daughter and granddaughter, ten years on from Oxmantown Road. Both are recorded as Protestant Church of Ireland, which is the puzzle.',
+   link:'https://nationalarchives.ie/collections/search-the-census/census-record/?census_year=1911&surname__icontains=byrne&firstname__icontains=martha&age__gte=10&age__lte=19&id=471571'},
+  {h:'1921 — the Wynd, Cumbernauld, Dunbartonshire', m:'Scotland, 19 June 1921 · schedule 139 · two rooms, fourteen people', imgs:['c1921_names'],
+   cap:'Thomas Valentine, 40, head, born Dublin, Ireland; Annie E., 39; then ten children born in Ireland and two — Brendon, 2, and Mary, 8 months — born at Cumbernauld. Fourteen people in all. This single page adds two children to the tree and dates the emigration to between November 1915 and 1919.<br><br>It also tests the Dublin dates. The three eldest reconcile almost exactly: Thomas at 40 years 2 months, Annie at 39 years 3 months and William at 20 years 6 months fit 18 April 1881, 13 March 1882 and 20 December 1900 to within days. The younger children do not. Counting back from 19 June 1921, the enumerator has Robert 2 months old, Walter 3, Anne 4, Thomas 6 and Frank 7 months older than their birth certificates allow — and for Thomas and Anne that pushes them into the wrong year. Someone was reciting a large family’s ages from memory.',
+   link:'https://www.scotlandspeople.gov.uk/'},
+  {h:'1921 — what they were all doing', m:'Occupation and employer columns, same page', imgs:['c1921_occ'],
+   cap:'Thomas: <b>Railway Porter</b>, North British Railway Co — the end of three generations in the book trade. William: brickworker, J. G. Stein &amp; Co Ltd. Thomas John: brickwork panman, Castlecary Fireclay Co. Martha: “Sheet Worker” (the reading is not certain), J &amp; A. Campbell &amp; Co., warehousemen. Annie E.: home duties. Louis and the six below him: scholars — seven in all.',
+   link:'https://www.scotlandspeople.gov.uk/'},
+  {h:'1921 — the full page', m:'Census 495/9/19, page 19 of 24 · Cumbernauld', imgs:['c1921_full'],
+   cap:'The Valentines are schedule 139, lines 18 to 31. Their neighbours in the Wynd give the flavour of the place: two clay miners — one at J. G. Stein &amp; Co, one at the Castlecary Fireclay Co — an engineer’s fitter, a metal merchant, a clerkess, and a grocery assistant at the Cumbernauld Co-operative Society.',
+   link:'https://www.scotlandspeople.gov.uk/'}]}
+];
+
+
+/* ---------- images ---------- */
+function imgAttrs(k){
+  var d=(typeof IMGDIM!=='undefined')&&IMGDIM[k];
+  return 'src="'+IMG[k]+'"'+(d?' width="'+d[0]+'" height="'+d[1]+'"':'')+' loading="lazy" decoding="async"';
+}
+document.querySelectorAll('img[data-src]').forEach(function(im){
+  var k=im.dataset.src, d=(typeof IMGDIM!=='undefined')&&IMGDIM[k];
+  im.src=IMG[k]; im.loading='lazy'; im.decoding='async';
+  if(d){ im.width=d[0]; im.height=d[1]; }
+});
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.navin button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.navin button').forEach(function(x){x.setAttribute('aria-selected','false');});
+    b.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById('p-'+b.dataset.t).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- drawer ---------- */
+var scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer'), dc=document.getElementById('dcontent');
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function openPerson(id){
+  var p=PEOPLE[id]; if(!p) return;
+  var h='<div class="dhead"><button class="dclose" aria-label="Close">&times;</button>'+
+    '<h3>'+p.name+'</h3><div class="role">'+(p.role?p.role+' · ':'')+(p.dates||'')+'</div>'+
+    '<div style="margin-top:11px"><span class="pill '+p.conf+'">'+p.conf+'</span></div></div><div class="dbody">';
+  if(p.summary) h+='<p class="dsum">'+p.summary+'</p>';
+  if(p.flags&&p.flags.length){h+='<h4>Where it is uncertain</h4>';
+    p.flags.forEach(function(f){h+='<div class="flagbox '+f[0]+'"><span>&#9888;</span><span>'+f[1]+'</span></div>';});}
+  if(p.facts&&p.facts.length){h+='<h4>The record</h4><table class="facts">';
+    p.facts.forEach(function(f){h+='<tr><td>'+f[0]+'</td><td>'+f[1]+'</td></tr>';});h+='</table>';}
+  if(p.notes&&p.notes.length){h+='<h4>Notes</h4>';
+    p.notes.forEach(function(n){h+='<div class="note">'+n+'</div>';});}
+  if(p.sources&&p.sources.length){h+='<h4>Sources</h4><ul class="srcs">';
+    p.sources.forEach(function(s){h+='<li><a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></li>';});h+='</ul>';}
+  h+='</div>';
+  dc.innerHTML=h;
+  dc.querySelector('.dclose').addEventListener('click',closeDrawer);
+  drawer.classList.add('on'); scrim.classList.add('on'); drawer.scrollTop=0;
+}
+function closeDrawer(){drawer.classList.remove('on');scrim.classList.remove('on');}
+scrim.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDrawer();document.getElementById('lb').classList.remove('on');}});
+
+/* ---------- tree ---------- */
+function node(id){
+  var p=PEOPLE[id];
+  return '<button class="pnode" data-p="'+id+'"><span class="nm"><span class="dot '+p.conf+'"></span>'+p.name+'</span>'+
+    '<span class="mt">'+[p.role,p.dates].filter(Boolean).join(' · ')+'</span></button>';
+}
+function couple(a,b,label,marr,hl){
+  return '<div class="couple'+(hl?' hl':'')+'"><div class="cl">'+label+'</div>'+node(a)+
+    (marr?'<div class="mline">'+marr+'</div>':'')+node(b)+'</div>';
+}
+var DIED_YOUNG={v3:1,v8:1,v9:1,k1:1,t2:1};
+function kid(id){
+  var p=PEOPLE[id];
+  var cls='kid'+(DIED_YOUNG[id]?' died':'')+(p.star?' main':'');
+  return '<button class="'+cls+'" data-p="'+id+'"><span class="nm"><span class="dot '+p.conf+'"></span>'+
+    p.name.replace(' Valentine','').replace(' Kavanagh','')+'</span><span class="mt">'+(p.dates||'')+'</span></button>';
+}
+var T='';
+T+='<div class="tier"><div class="tier-label">The oldest known generation</div><div class="couples">'+
+  couple('wv_sr','el_sr','Valentine','93 Marlboro Street')+
+  couple('pm_sr','cm_sr','Mackey','18 Greenville Street')+
+  couple('jk_sr','mk_sr','Kavanagh','37 Jervis Street')+
+  couple('pw_sr','aw_sr','Walsh','31 Jervis Street')+
+  '</div></div><div class="drop"></div>';
+
+T+='<div class="tier"><div class="tier-label">Their children marry — 1863 and 1873</div>'+
+  '<div class="couples" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">'+
+  couple('WV','MM','Married 3 August 1863','St Mary’s Pro-Cathedral · he about 21, she 17',true)+
+  couple('JK','AWm','Married 4 August 1873','St Mary’s Pro-Cathedral · he 26 and a widower, she 16',true)+
+  '</div></div><div class="drop"></div>';
+
+T+='<div class="tier"><div class="tier-label">Eleven Valentine children · 1864 – 1890</div><div class="kids">'+
+  ['v1','v2','v3','v4','v5','v6','v7','v8','v9','v10','v11'].map(kid).join('')+'</div></div>';
+T+='<div style="height:22px"></div>';
+T+='<div class="tier"><div class="tier-label">Four Kavanagh children · 1880 – 1887</div><div class="kids">'+
+  ['k1','k2','k3','k4'].map(kid).join('')+'</div></div><div class="drop thick"></div>';
+
+T+='<div class="tier"><div class="joinbar"><div class="cl">The two families join · 5 August 1900</div>'+
+  node('v7')+'<div class="mline">Married at St Mary’s Pro-Cathedral · he 19, she 18</div>'+node('k2')+
+  '</div></div><div class="drop thick"></div>';
+
+T+='<div class="tier"><div class="tier-label">Their thirteen children · 1900 – 1920</div><div class="kids">'+
+  ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11'].map(kid).join('')+'</div>'+
+  '<div class="scotband">Born in Scotland</div><div class="kids">'+
+  ['t12','t13'].map(kid).join('')+'</div></div>';
+
+document.getElementById('treeroot').innerHTML=T;
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-p]'); if(b) openPerson(b.dataset.p);
+});
+
+/* ---------- timeline ---------- */
+document.getElementById('tlroot').innerHTML=TIMELINE.map(function(t){
+  return '<div class="tlitem'+(t.key?' major':'')+'"><div class="tly">'+t.y+'</div>'+
+    '<div class="tlt">'+t.t+(t.tag!=='confirmed'?' <span class="pill '+t.tag+'">'+t.tag+'</span>':'')+'</div>'+
+    '<div class="tld">'+t.d+'</div></div>';
+}).join('');
+
+/* ---------- places ---------- */
+var GMAPS='https://www.google.com/maps/';
+function svLink(lat,lng){return GMAPS+'@?api=1&map_action=pano&viewpoint='+lat+','+lng;}
+function pinLink(lat,lng){return GMAPS+'search/?api=1&query='+lat+','+lng;}
+function nameLink(q){return GMAPS+'search/?api=1&query='+encodeURIComponent(q);}
+var STATUS={extant:'Still there',renamed:'Renamed',demolished:'Site of',uncertain:'Uncertain'};
+
+/* one link per address: Street View where the fix is good, a Maps pin where it is not */
+function addrLink(r){
+  var lat=r[3],lng=r[4],st=r[5],prec=r[6],conf=r[7];
+  if(r[8]) return {href:r[8], label:'Street View'};   /* hand-picked view */
+  if(lat==null) return {href:nameLink(r[1]+', Dublin, Ireland'), label:'Find on Maps'};
+  if(conf==='high'||conf==='med') return {href:svLink(lat,lng), label:st==='demolished'?'Street View of the site':'Street View'};
+  return {href:pinLink(lat,lng), label:'Show on Maps'};
+}
+
+/* ---------- live map ---------- */
+var GRP={
+  thomas:{label:'Thomas &amp; Anne',color:'#8c5a2b'},
+  william:{label:'William &amp; Martha',color:'#3f6b57'},
+  kavanagh:{label:'James &amp; Anne Kavanagh',color:'#5a4a7a'},
+  other:{label:'Other addresses',color:'#8a6f4a'},
+  churches:{label:'Churches',color:'#2f6b6b'},
+  landmarks:{label:'Landmarks',color:'#94693f'}
+};
+document.getElementById('maplegend').innerHTML=Object.keys(GRP).map(function(k){
+  return '<span><i style="background:'+GRP[k].color+'"></i>'+GRP[k].label+'</span>';
+}).join('')+'<span style="color:var(--faint)"><i style="background:#fff;border-style:dashed;border-color:#9a3f3f"></i>dashed = building gone</span>';
+
+var MAPPTS=[], PINNO={};
+function seen(lat,lng){ /* nudge exact duplicates apart so both stay clickable */
+  var k=lat.toFixed(5)+','+lng.toFixed(5);
+  seen.c=seen.c||{}; seen.c[k]=(seen.c[k]||0)+1;
+  var n=seen.c[k]-1;
+  return n? [lat+n*0.00013, lng+n*0.00020] : [lat,lng];
+}
+Object.keys(PLACES).forEach(function(k){
+  PLACES[k].rows.forEach(function(r,i){
+    if(r[3]==null) return;
+    var xy=seen(r[3],r[4]);
+    MAPPTS.push({grp:k,yr:r[0],name:r[1],note:r[2],lat:xy[0],lng:xy[1],st:r[5],conf:r[7],sv:r[8]});
+    PINNO[k+'|'+i]=MAPPTS.length;
+  });
+});
+CHURCHES.forEach(function(c,i){MAPPTS.push({grp:'churches',yr:'Church',name:c[0]+', '+c[1],note:c[2],lat:c[3],lng:c[4],st:'extant',conf:'high'});PINNO['churches|'+i]=MAPPTS.length;});
+LANDMARKS.forEach(function(c,i){MAPPTS.push({grp:'landmarks',yr:'Landmark',name:c[0]+', '+c[1],note:c[2],lat:c[3],lng:c[4],st:'extant',conf:'high'});PINNO['landmarks|'+i]=MAPPTS.length;});
+
+function pinCell(grp,i,color,dem){
+  var n=PINNO[grp+'|'+i];
+  if(!n) return '<td class="pin"><button class="pinbtn" disabled title="No coordinate established">?</button></td>';
+  return '<td class="pin"><button class="pinbtn'+(dem?' dem':'')+'" data-pin="'+n+'" style="background:'+color+'" title="Show number '+n+' on the map">'+n+'</button></td>';
+}
+function addrTable(grp,color,rows){
+  return '<table class="addr">'+rows.map(function(r,i){
+    var L=addrLink(r), st=r[5];
+    return '<tr>'+pinCell(grp,i,color,st==='demolished')+'<td class="yr">'+r[0]+'</td><td class="ad">'+r[1]+
+      '<span class="stat st-'+st+'">'+STATUS[st]+'</span></td><td class="nt">'+r[2]+
+      '</td><td class="act"><a class="svlink" href="'+L.href+'" target="_blank" rel="noopener">'+L.label+' &rarr;</a></td></tr>';
+  }).join('')+'</table>';
+}
+document.getElementById('placeroot').innerHTML=Object.keys(PLACES).map(function(k){
+  var p=PLACES[k];
+  return '<div class="card plcard"><h3><i style="background:'+p.color+'"></i>'+p.label+'</h3>'+
+    (p.sub?'<p style="margin:-6px 0 12px;color:var(--muted);font-size:14px">'+p.sub+'</p>':'')+
+    addrTable(k,p.color,p.rows)+'</div>';
+}).join('');
+document.getElementById('churchroot').innerHTML='<div class="card plcard"><table class="addr">'+
+  CHURCHES.map(function(c,i){
+    return '<tr>'+pinCell('churches',i,'#2f6b6b',false)+'<td class="yr" style="width:150px">'+c[1]+'</td><td class="ad">'+c[0]+'</td><td class="nt">'+c[2]+'</td>'+
+      '<td class="act"><a class="svlink" href="'+svLink(c[3],c[4])+'" target="_blank" rel="noopener">Street View &rarr;</a></td></tr>';
+  }).join('')+'</table></div>';
+document.getElementById('landmarkroot').innerHTML='<div class="card plcard"><table class="addr">'+
+  LANDMARKS.map(function(c,i){
+    return '<tr>'+pinCell('landmarks',i,'#94693f',false)+'<td class="yr" style="width:150px">'+c[1]+'</td><td class="ad">'+c[0]+'</td><td class="nt">'+c[2]+'</td>'+
+      '<td class="act"><a class="svlink" href="'+svLink(c[3],c[4])+'" target="_blank" rel="noopener">Street View &rarr;</a></td></tr>';
+  }).join('')+'</table></div>';
+
+/* clicking a number in a table flies the map to that pin and opens it */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.pinbtn[data-pin]'); if(!b) return;
+  if(!mapReady) buildMap();
+  if(!theMap) return;
+  var m=MK[+b.dataset.pin-1]; if(!m) return;
+  document.querySelectorAll('.mapbar button[data-grp]').forEach(function(x){x.setAttribute('aria-pressed', x.dataset.grp==='all'?'true':'false');});
+  MK.forEach(function(x){x.addTo(theMap);});
+  document.getElementById('mapwrap').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(function(){ theMap.invalidateSize(); theMap.setView(m.getLatLng(),17); m.openPopup(); },420);
+});
+
+var mapReady=false, MK=[], theMap=null, tilesOK=0, tileErr=0, gaveUp=false;
+function showFallback(){
+  if(gaveUp) return; gaveUp=true;
+  var w=document.getElementById('mapwrap'); if(w) w.style.display='none';
+  var f=document.getElementById('mapfallback'); if(f) f.style.display='block';
+}
+function buildMap(){
+  if(mapReady) return false;
+  if(typeof L==='undefined'){ showFallback(); return false; }
+  try{
+    theMap=L.map('map',{scrollWheelZoom:false}).setView([53.3535,-6.2650],14);
+    var tl=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+      maxZoom:19, subdomains:'abcd',
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(theMap);
+    tl.on('tileload',function(){tilesOK++;});
+    tl.on('tileerror',function(){ tileErr++; if(tileErr>3 && tilesOK===0) showFallback(); });
+    var n=0;
+    MAPPTS.forEach(function(p){
+      n++;
+      var col=GRP[p.grp].color;
+      var ic=L.divIcon({className:'pinlbl',iconSize:[22,22],iconAnchor:[11,11],
+        html:'<div class="'+(p.st==='demolished'?'dem':'')+'" style="background:'+col+'">'+n+'</div>'});
+      var href = p.sv ? p.sv : ((p.conf==='high'||p.conf==='med') ? svLink(p.lat,p.lng) : pinLink(p.lat,p.lng));
+      var link = '<a href="'+href+'" target="_blank" rel="noopener">'+
+        (p.sv||p.conf==='high'||p.conf==='med' ? 'Open Street View' : 'Open in Maps')+' &rarr;</a>';
+      var m=L.marker([p.lat,p.lng],{icon:ic}).addTo(theMap)
+        .bindPopup('<span class="yr">'+p.yr+' &middot; '+STATUS[p.st]+'</span><b>'+p.name+'</b><p>'+p.note+'</p>'+link);
+      m._grp=p.grp; MK.push(m);
+    });
+    mapReady=true;
+    setTimeout(function(){theMap.invalidateSize();},60);
+    setTimeout(function(){ if(tilesOK===0) showFallback(); },6000);
+    return true;
+  }catch(e){ showFallback(); return false; }
+}
+document.querySelector('.navin button[data-t=places]').addEventListener('click',function(){
+  if(!mapReady) buildMap();
+  else setTimeout(function(){theMap.invalidateSize();},80);
+});
+document.querySelectorAll('.mapbar button[data-fly]').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!theMap) return;
+    document.querySelectorAll('.mapbar button[data-fly]').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    if(b.dataset.fly==='dublin') theMap.setView([53.3535,-6.2650],14);
+    else theMap.setView([55.96284,-3.97499],17);
+  });
+});
+document.querySelectorAll('.mapbar button[data-grp]').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!theMap) return;
+    document.querySelectorAll('.mapbar button[data-grp]').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    var g=b.dataset.grp, bounds=[];
+    MK.forEach(function(m){
+      var on = (g==='all'||m._grp===g);
+      if(on){ m.addTo(theMap); bounds.push(m.getLatLng()); } else { theMap.removeLayer(m); }
+    });
+    if(bounds.length) theMap.fitBounds(L.latLngBounds(bounds).pad(0.15),{maxZoom:16});
+  });
+});
+
+/* ---------- records ---------- */
+document.getElementById('recroot').innerHTML=RECORDS.map(function(g){
+  return '<div class="recgroup"><h3>'+g.title+'</h3><p>'+g.blurb+'</p>'+
+    g.items.map(function(it){
+      return '<div class="card rec"><h3>'+it.h+'</h3><div class="meta">'+it.m+'</div>'+
+        it.imgs.map(function(k){return '<img data-k="'+k+'" '+imgAttrs(k)+' alt="'+it.h+'">';}).join('')+
+        (it.cap?'<p style="margin:6px 0 0;font-size:14px;color:var(--muted)">'+it.cap+'</p>':'')+
+        (it.link?'<p style="margin:8px 0 0;font-size:13.5px"><a href="'+it.link+'" target="_blank" rel="noopener">View the source record &rarr;</a></p>':'')+
+        '</div>';
+    }).join('')+'</div>';
+}).join('');
+
+/* lightbox */
+var lb=document.getElementById('lb');
+document.addEventListener('click',function(e){
+  if(e.target.tagName==='IMG'&&e.target.dataset.k){
+    lb.querySelector('img').src=e.target.src;
+    lb.querySelector('p').textContent=e.target.alt;
+    lb.classList.add('on');
+  }else if(e.target.closest('.lb')){lb.classList.remove('on');}
+});
+
+/* ---------- questions ---------- */
+document.getElementById('qroot').innerHTML=QUESTIONS.map(function(q,i){
+  var lbl=q.p===1?'Highest value':(q.p===2?'Worth chasing':'Loose end');
+  return '<div class="card q"><div class="qh"><div class="qn">'+(i+1)+'</div><div style="flex:1">'+
+    '<h3>'+q.q+'</h3></div><span class="prio">'+lbl+'</span></div>'+
+    '<p>'+q.d+'</p><div class="next"><b>Next step</b>'+q.n+'</div></div>';
+}).join('');
+</script>
+</body>
+</html>

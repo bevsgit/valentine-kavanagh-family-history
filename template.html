@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Valentine &amp; Kavanagh Families of Dublin &amp; Cumbernauld</title>
+<!--__META__-->
+<!--__HEAD_ASSETS__-->
+<style>
+:root{
+  --paper:#f4efe4; --card:#fffdf7; --ink:#25282d; --muted:#6f675a; --faint:#948a79;
+  --rule:#ddd2bd; --accent:#8c5a2b; --accent2:#3f6b57; --accent3:#5a4a7a;
+  --ok:#3c6b4f; --maybe:#a3711b; --no:#9a3f3f;
+  --shadow:0 1px 2px rgba(60,45,25,.06),0 6px 20px rgba(60,45,25,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:radial-gradient(circle at 20% 30%,rgba(140,90,43,.05),transparent 45%),radial-gradient(circle at 80% 70%,rgba(63,107,87,.05),transparent 45%)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+a{color:var(--accent);text-decoration-color:rgba(140,90,43,.35);text-underline-offset:2px}
+a:hover{text-decoration-color:var(--accent)}
+h1,h2,h3,h4{line-height:1.2;margin:0;font-weight:600;letter-spacing:-.01em}
+.small{font-size:13.5px}
+.mono{font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em}
+
+/* header */
+header{padding:56px 0 26px;text-align:center;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#faf6ed,rgba(250,246,237,0))}
+.eyebrow{font:12px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:16px}
+h1{font-size:clamp(30px,5.2vw,50px);margin-bottom:14px}
+h1 em{font-style:normal;color:var(--accent)}
+.dek{max-width:640px;margin:0 auto;color:var(--muted);font-size:17px}
+.hstats{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;margin-top:30px}
+.hstat b{display:block;font-size:26px;color:var(--accent);font-weight:600;line-height:1.1}
+.hstat span{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;background:rgba(244,239,228,.93);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.navin{display:flex;gap:2px;overflow-x:auto;max-width:1080px;margin:0 auto;padding:0 12px;scrollbar-width:none}
+.navin::-webkit-scrollbar{display:none}
+.navin button{flex:0 0 auto;background:none;border:0;border-bottom:2px solid transparent;padding:14px 14px 12px;
+  font:13px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);cursor:pointer;white-space:nowrap}
+.navin button:hover{color:var(--ink)}
+.navin button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent)}
+
+main{padding:44px 0 90px}
+.panel{display:none}
+.panel.on{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sect{margin-bottom:52px}
+.sect>h2{font-size:24px;margin-bottom:6px}
+.sect>.sub{color:var(--muted);font-size:15px;margin-bottom:24px;max-width:660px}
+.lede{font-size:19px;line-height:1.62;color:#33373d;max-width:690px}
+.lede p{margin:0 0 18px}
+.lede p:first-child:first-letter{float:left;font-size:56px;line-height:.82;padding:5px 9px 0 0;color:var(--accent);font-weight:600}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:5px;font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;
+  text-transform:uppercase;padding:4px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
+.pill:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor}
+.confirmed{color:var(--ok);border-color:rgba(60,107,79,.32);background:rgba(60,107,79,.07)}
+.probable{color:var(--maybe);border-color:rgba(163,113,27,.32);background:rgba(163,113,27,.08)}
+.unresolved{color:var(--no);border-color:rgba(154,63,63,.32);background:rgba(154,63,63,.07)}
+
+.key{display:flex;flex-wrap:wrap;gap:10px 20px;padding:16px 18px;background:var(--card);border:1px solid var(--rule);border-radius:12px;margin-bottom:28px}
+.key div{font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+
+/* cards */
+.card{background:var(--card);border:1px solid var(--rule);border-radius:12px;box-shadow:var(--shadow)}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+
+/* tree */
+.tier{margin-bottom:6px}
+.tier-label{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  text-align:center;margin:0 0 16px;display:flex;align-items:center;gap:14px}
+.tier-label:before,.tier-label:after{content:"";flex:1;height:1px;background:var(--rule)}
+.couples{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.couple{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:14px;box-shadow:var(--shadow);position:relative}
+.couple.hl{border-color:rgba(140,90,43,.45);box-shadow:0 0 0 1px rgba(140,90,43,.16),var(--shadow)}
+.couple .cl{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.pnode{display:block;width:100%;text-align:left;background:none;border:0;padding:7px 8px;margin:0 -8px;border-radius:8px;cursor:pointer;font-family:inherit;color:inherit}
+.pnode:hover{background:rgba(140,90,43,.07)}
+.pnode .nm{font-size:15.5px;font-weight:600;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.pnode .mt{font-size:12.5px;color:var(--muted);margin-top:1px}
+.dot{width:6px;height:6px;border-radius:50%;flex:0 0 auto}
+.dot.confirmed{background:var(--ok)}.dot.probable{background:var(--maybe)}.dot.unresolved{background:var(--no)}
+.mline{border-top:1px dashed var(--rule);margin:9px 0;padding-top:8px;font-size:12px;color:var(--faint);font-style:italic}
+.drop{width:1px;height:26px;background:var(--rule);margin:0 auto}
+.drop.thick{width:2px;height:34px;background:linear-gradient(var(--rule),rgba(140,90,43,.5))}
+.joinbar{max-width:640px;margin:0 auto;background:linear-gradient(180deg,#fffdf7,#fbf6ea);border:1px solid rgba(140,90,43,.35);
+  border-radius:14px;padding:20px;text-align:center;box-shadow:var(--shadow)}
+.joinbar .cl{color:var(--accent)}
+.joinbar .pnode{text-align:center}
+.joinbar .pnode .nm{justify-content:center}
+.kids{display:grid;gap:9px;grid-template-columns:repeat(auto-fill,minmax(158px,1fr))}
+.kid{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:10px 11px;cursor:pointer;text-align:left;font-family:inherit;color:inherit;transition:.14s}
+.kid:hover{border-color:rgba(140,90,43,.45);transform:translateY(-1px);box-shadow:var(--shadow)}
+.kid .nm{font-size:14px;font-weight:600;display:flex;gap:6px;align-items:center}
+.kid .mt{font-size:11.5px;color:var(--muted);margin-top:2px}
+.kid.died{background:repeating-linear-gradient(135deg,#fffdf7,#fffdf7 7px,#faf5ea 7px,#faf5ea 14px)}
+.kid.main{border-color:rgba(140,90,43,.5);background:#fdf7ec}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(40,32,20,.4);opacity:0;pointer-events:none;transition:.24s;z-index:98;backdrop-filter:blur(2px)}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(520px,100%);background:var(--card);z-index:99;
+  transform:translateX(101%);transition:transform .28s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-14px 0 40px rgba(60,45,25,.15)}
+.drawer.on{transform:none}
+.dhead{padding:26px 28px 18px;border-bottom:1px solid var(--rule);position:sticky;top:0;background:var(--card);z-index:2}
+.dhead h3{font-size:25px;margin-bottom:5px}
+.dhead .role{color:var(--muted);font-size:14px}
+.dclose{position:absolute;top:20px;right:20px;background:none;border:1px solid var(--rule);border-radius:50%;width:32px;height:32px;
+  cursor:pointer;color:var(--muted);font-size:17px;line-height:1}
+.dclose:hover{background:var(--paper);color:var(--ink)}
+.dbody{padding:22px 28px 60px}
+.dbody h4{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:26px 0 11px}
+.dbody h4:first-child{margin-top:0}
+.dsum{font-size:16px;color:#33373d;margin:0 0 4px}
+table.facts{width:100%;border-collapse:collapse;font-size:14.5px}
+table.facts td{padding:7px 0;border-bottom:1px solid #efe8da;vertical-align:top}
+table.facts td:first-child{width:38%;color:var(--muted);padding-right:14px;font-size:13px}
+.note{font-size:14.5px;color:#3a3e44;padding:11px 13px;background:#faf5ea;border-left:2px solid var(--rule);border-radius:0 7px 7px 0;margin-bottom:9px}
+.srcs{list-style:none;padding:0;margin:0}
+.srcs li{padding:6px 0;border-bottom:1px solid #efe8da;font-size:14px}
+.flagbox{display:flex;gap:9px;align-items:flex-start;padding:10px 12px;border-radius:8px;font-size:14px;margin-bottom:8px}
+.flagbox.probable{background:rgba(163,113,27,.08);color:#7a5514}
+.flagbox.unresolved{background:rgba(154,63,63,.07);color:#7d3333}
+
+/* timeline */
+.tl{position:relative;padding-left:34px}
+.tl:before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;background:var(--rule)}
+.tlitem{position:relative;margin-bottom:26px}
+.tlitem:before{content:"";position:absolute;left:-30px;top:8px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--rule)}
+.tlitem.major:before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(140,90,43,.14)}
+.tly{font:11.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:var(--faint);margin-bottom:3px}
+.tlt{font-size:17px;font-weight:600;margin-bottom:4px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.tld{color:var(--muted);font-size:15px;max-width:640px}
+
+/* places */
+.plcard{padding:18px 20px;margin-bottom:16px}
+.plcard h3{font-size:17px;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.plcard h3 i{width:10px;height:10px;border-radius:3px;display:block}
+table.addr{width:100%;border-collapse:collapse;font-size:14.5px}
+table.addr td{padding:8px 10px 8px 0;border-bottom:1px solid #efe8da;vertical-align:top}
+table.addr tr:last-child td{border-bottom:0}
+table.addr td.yr{white-space:nowrap;font:11.5px/1.5 ui-monospace,Menlo,monospace;color:var(--faint);width:86px;padding-top:11px}
+table.addr td.ad{font-weight:600;width:26%;min-width:190px}
+table.addr td.nt{color:var(--muted);font-size:13.5px}
+
+
+/* scotland band in tree */
+.scotband{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  margin:14px 0 10px;display:flex;align-items:center;gap:12px}
+.scotband:before,.scotband:after{content:"";flex:1;height:1px;background:rgba(140,90,43,.3)}
+
+/* map */
+#mapwrap{position:relative;border:1px solid var(--rule);border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+#map{height:480px;width:100%;background:#efe9dc}
+.mapbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--rule);background:#fbf7ee}
+.mapbar b{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-right:2px}
+.mapbar button{font:12px/1 ui-monospace,Menlo,monospace;letter-spacing:.06em;background:var(--card);border:1px solid var(--rule);
+  border-radius:20px;padding:6px 11px;cursor:pointer;color:var(--muted)}
+.mapbar button:hover{border-color:var(--accent);color:var(--accent)}
+.mapbar button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.maplegend{display:flex;flex-wrap:wrap;gap:8px 16px;padding:11px 14px;border-top:1px solid var(--rule);background:#fbf7ee;font-size:12.5px;color:var(--muted)}
+.maplegend span{display:flex;align-items:center;gap:6px}
+.maplegend i{width:11px;height:11px;border-radius:50%;display:block;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+#mapfallback{display:none}
+.leaflet-popup-content{margin:12px 14px;font:14px/1.5 "Iowan Old Style",Palatino,Georgia,serif}
+.leaflet-popup-content b{display:block;font-size:15px;margin-bottom:2px}
+.leaflet-popup-content .yr{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:#948a79;text-transform:uppercase}
+.leaflet-popup-content p{margin:7px 0 9px;color:#5c5548;font-size:13.5px}
+.pinlbl{background:none;border:0}
+.pinlbl div{width:22px;height:22px;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+  color:#fff;font:11px/18px ui-monospace,Menlo,monospace;text-align:center}
+.pinlbl div.dem{border-style:dashed;opacity:.85}
+
+/* address tables */
+table.addr td.act{white-space:nowrap;width:1%;text-align:right;padding-left:10px}
+table.addr td.pin{width:1%;padding-right:12px;vertical-align:top;padding-top:10px}
+.pinbtn{width:23px;height:23px;border-radius:50%;border:0;color:#fff;cursor:pointer;
+  font:11px/23px ui-monospace,Menlo,monospace;padding:0;display:block}
+.pinbtn:hover{outline:2px solid rgba(140,90,43,.4);outline-offset:2px}
+.pinbtn.dem{opacity:.75;border:1px dashed #fff;line-height:21px}
+.pinbtn[disabled]{background:#e6ddcb !important;color:#a1957f;cursor:default}
+.svlink{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--rule);border-radius:20px;padding:5px 9px;color:var(--muted);text-decoration:none;display:inline-block}
+.svlink:hover{border-color:var(--accent);color:var(--accent)}
+.stat{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.09em;text-transform:uppercase;padding:3px 7px;border-radius:20px;
+  border:1px solid;white-space:nowrap;margin-left:8px;vertical-align:2px}
+.st-extant{color:#3c6b4f;border-color:rgba(60,107,79,.3);background:rgba(60,107,79,.06)}
+.st-renamed{color:#2c5c7a;border-color:rgba(44,92,122,.3);background:rgba(44,92,122,.06)}
+.st-demolished{color:#9a3f3f;border-color:rgba(154,63,63,.3);background:rgba(154,63,63,.06)}
+.st-uncertain{color:#a3711b;border-color:rgba(163,113,27,.3);background:rgba(163,113,27,.07)}
+
+figure{margin:0}
+figure img{width:100%;display:block;border-radius:10px;border:1px solid var(--rule);background:#fff}
+figcaption{font-size:13px;color:var(--muted);margin-top:9px}
+
+/* records */
+.rec{padding:16px;margin-bottom:14px}
+.rec h3{font-size:16px;margin-bottom:3px}
+.rec .meta{font:11px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+.rec img{width:100%;display:block;border:1px solid var(--rule);border-radius:8px;background:#fff;cursor:zoom-in;margin-bottom:8px}
+.recgroup{margin-bottom:34px}
+.recgroup>h3{font-size:19px;margin-bottom:4px}
+.recgroup>p{color:var(--muted);font-size:14.5px;margin:0 0 16px}
+
+/* questions */
+.q{padding:18px 20px;margin-bottom:14px}
+.q .qh{display:flex;gap:12px;align-items:flex-start;margin-bottom:8px}
+.qn{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;
+  font:11px/1 ui-monospace,Menlo,monospace;margin-top:2px}
+.q h3{font-size:17px}
+.q p{margin:0 0 10px;color:#3a3e44;font-size:15px}
+.q .next{font-size:14.5px;background:#faf5ea;border-left:2px solid var(--accent);padding:10px 13px;border-radius:0 7px 7px 0;color:#3a3e44}
+.q .next b{font:10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+.prio{font:10px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);border:1px solid var(--rule);padding:3px 7px;border-radius:20px}
+
+/* lightbox */
+.lb{position:fixed;inset:0;background:rgba(28,22,14,.93);z-index:200;display:none;place-items:center;padding:26px;cursor:zoom-out}
+.lb.on{display:grid}
+.lb img{max-width:100%;max-height:88vh;border-radius:6px}
+.lb p{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:#e8dfcd;font-size:13.5px;margin:0;padding:0 20px}
+
+footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);font-size:13.5px;text-align:center}
+@media(max-width:720px){
+  table.addr,table.addr tbody,table.addr tr,table.addr td{display:block;width:auto !important;min-width:0 !important}
+  table.addr tr{position:relative;padding:14px 0 14px 36px;border-bottom:1px solid #efe8da}
+  table.addr tr:last-child{border-bottom:0}
+  table.addr td{border:0;padding:1px 0}
+  table.addr td.pin{position:absolute;left:0;top:14px;padding:0}
+  table.addr td.yr{padding-top:0;width:auto !important}
+  table.addr td.ad{font-size:16px;margin:2px 0 4px}
+  table.addr td.act{text-align:left;padding:9px 0 0}
+  .stat{margin-left:6px}
+  #map{height:360px}
+  .mapbar{gap:6px}
+  .mapbar button{padding:5px 9px;font-size:11.5px}
+}
+@media(max-width:640px){
+  header{padding:38px 0 22px}
+  .drawer{width:100%}
+  .dhead,.dbody{padding-left:20px;padding-right:20px}
+  .lede{font-size:17.5px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="eyebrow">Dublin &amp; Cumbernauld · 1842 – 1958</div>
+    <h1>The <em>Valentines</em> and the <em>Kavanaghs</em></h1>
+    <p class="dek">Four generations of bookbinders, coachmen and cloakmakers on the north side of Dublin — the marriage, in August 1900, that brought the two families together, and the crossing to Scotland that ended the trade.</p>
+    <div class="hstats">
+      <div class="hstat"><b>40</b><span>People</span></div>
+      <div class="hstat"><b>4</b><span>Generations</span></div>
+      <div class="hstat"><b>32</b><span>Record images</span></div>
+      <div class="hstat"><b>18</b><span>Open questions</span></div>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="navin" role="tablist">
+    <button role="tab" data-t="story" aria-selected="true">The story</button>
+    <button role="tab" data-t="tree" aria-selected="false">Family tree</button>
+    <button role="tab" data-t="time" aria-selected="false">Timeline</button>
+    <button role="tab" data-t="places" aria-selected="false">Places</button>
+    <button role="tab" data-t="records" aria-selected="false">The records</button>
+    <button role="tab" data-t="open" aria-selected="false">Open questions</button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- STORY -->
+<section class="panel on" id="p-story">
+  <div class="sect">
+    <div class="lede">
+      <p>On 3 August 1863, in St Mary's Pro-Cathedral on Marlborough Street, a twenty-one-year-old bookbinder named William Valentine married a seventeen-year-old bookfolder named Martha Mackey. She was still legally a minor. He was the son of a railway clerk; she was the daughter of a coach maker. Both of them worked in the book trade, and both of them would stay in it for the rest of their lives.</p>
+      <p>Ten years later, almost to the day, a widowed railway guard called James Kavanagh married sixteen-year-old Anne Walsh in the same church. Their fathers — a coachman and a carpenter — lived a few doors apart on Jervis Street, which is almost certainly how they met.</p>
+      <p>Those two marriages produced fifteen children between them. In August 1900, the seventh Valentine child married the second Kavanagh child, and the families became one. They had thirteen children of their own — eleven in Dublin, and then, some time between the Easter Rising and the War of Independence, they crossed to a village in Scotland and had two more.</p>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>What the records show</h2>
+    <div class="grid g2" style="margin-top:18px">
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family of the book trade</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William was a bookbinder; Martha a bookfolder; their daughters Elizabeth and Martha both bookfolders; their son Louis a compositor and later a linotype operator; their son Thomas a book finisher who rose to foreman. Four of the death certificates in this tree describe the deceased simply as a bookbinder's wife, a bookbinder's child, a bookbinder's son. It was not just a job — it was the family's identity in the eyes of the state. And then, in one census line, it stops.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that changed church</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William was Church of Ireland, Martha Roman Catholic. Their first two children were baptised Catholic at the Pro-Cathedral. From 1871 every child was baptised at St George's, Church of Ireland. By 1901 Elizabeth is recorded as Wesleyan, Martha as Roman Catholic, and Thomas — baptised COI in 1881 — had married in the Pro-Cathedral as a Catholic. Denomination in this family bent to circumstance.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that buried its children</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">Of William and Martha's eleven children, four died before adulthood: William Thomas of meningitis at eight, Ruth Florence of diphtheria at two, Walter William of typhus at thirteen, and Mary — probably — of tuberculosis at nineteen. The Kavanaghs lost their firstborn, Patrick, at one month, of severe malnutrition. Thomas and Anne lost a son too: the 1911 census records seven children born and six living.</p>
+      </div>
+      <div class="card" style="padding:20px;border-color:rgba(140,90,43,.4)">
+        <h3 style="font-size:17px;margin-bottom:8px">A family that gave up its trade</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">On 19 June 1921 the census finds them at the Wynd in Cumbernauld Village, Dunbartonshire: Thomas, Annie and twelve of their thirteen children — fourteen people in <b>two rooms</b>. Thomas, a foreman bookbinder finisher ten years earlier, is now a <b>railway porter</b> for the North British Railway Company. William and Thomas John are in the local brick and fireclay works; Martha is in a warehouse. Whatever took them across, it was not the book trade.</p>
+      </div>
+      <div class="card" style="padding:20px">
+        <h3 style="font-size:17px;margin-bottom:8px">A family always on the move</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">More than twenty different addresses appear across these records, nearly all of them within a mile of the Pro-Cathedral. Thomas and Anne alone lived at six Dublin addresses in sixteen years. The one period of stability is Portland Place, where William and Martha stayed for seventeen years and raised eight children. Then the family left Ireland altogether.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>The bookbinder's trade</h2>
+    <p class="sub">Context for what William, Thomas and Louis actually did all day — and why the work changed under them.</p>
+    <div class="card" style="padding:22px">
+      <p style="margin-top:0;color:#3a3e44">A bookbinder took printed sheets from the printer and turned them into books: folding and collating the gatherings, sewing them on a frame, attaching boards, covering in cloth or leather, then finishing — lettering, gilding, tooling, trimming and polishing. William's title, <b>bookbinder</b>, covered the whole craft. Thomas's title, <b>book finisher</b>, was the skilled decorative end of it.</p>
+      <p style="color:#3a3e44">Between 1880 and 1920 that craft split in two. Folding machines, sewing machines, casing-in machines, mechanical blocking presses and guillotines arrived in the commercial binderies. Much of the work was deskilled, and women and children entered the trade in large numbers as factory hands — by 1900 women outnumbered men in many trade binderies. Fine hand binding survived as a prestigious but shrinking niche.</p>
+      <p style="margin-bottom:0;color:#3a3e44">That is the arc this family lived through. Martha and both her bookfolder daughters were part of the female influx. Louis moved from hand compositing to operating a linotype machine. And Thomas — a foreman bookbinder finisher by 1911 — held on to the skilled end just as it was contracting. One Dublin firm of the period, <b>Galwey &amp; Co.</b> of 22 Eustace Street, was substantial enough to take on institutional work of the first rank — your notes credit it with a rebinding of the Book of Kells in 1895, though that particular attribution is not one I have been able to corroborate against the standard published accounts of the manuscript's binding history, which name 1826, an 1874 London rebinding, and Roger Powell's in 1953. The firm and its premises are well documented; the 1895 job would need Trinity's own binding records to settle.</p>
+    </div>
+  </div>
+
+  <div class="sect">
+    <h2>How to read this</h2>
+    <div class="key">
+      <div><span class="pill confirmed">Confirmed</span> Every event in this person’s record is documented and consistent.</div>
+      <div><span class="pill probable">Probable</span> Identified, but at least one record carries a discrepancy.</div>
+      <div><span class="pill unresolved">Unresolved</span> The trail goes cold: a record could not be found, or there are too many candidates.</div>
+    </div>
+    <p class="small" style="color:var(--muted);max-width:660px">Every name in the family tree is clickable and opens the full detail — dates, addresses, occupations, the reasoning behind each identification, and links to the original records on irishgenealogy.ie and the National Archives of Ireland.</p>
+  </div>
+</section>
+
+<!-- TREE -->
+<section class="panel" id="p-tree">
+  <div class="sect">
+    <h2>The family tree</h2>
+    <p class="sub">Click any name for the full record. The coloured dot shows the <i>weakest</i> link in that person’s record, not the strongest — William Valentine is the best-documented man here and still shows red, because his birth has never been found. Hatched boxes mark children who died young.</p>
+    <div id="treeroot"></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="panel" id="p-time">
+  <div class="sect">
+    <h2>Timeline</h2>
+    <p class="sub">A hundred and sixteen years, from a birth with no record to a death in another country. Larger dots mark the turning points.</p>
+    <div class="tl" id="tlroot"></div>
+  </div>
+</section>
+
+<!-- PLACES -->
+<section class="panel" id="p-places">
+  <div class="sect">
+    <h2>Where they lived</h2>
+    <p class="sub">Almost the whole of this story takes place in a small patch of north inner-city Dublin, between the Pro-Cathedral, the quays and Ballybough — and then, abruptly, in a village in Dunbartonshire. Every address below is clickable.</p>
+
+    <div id="mapwrap">
+      <div class="mapbar">
+        <b>Show</b>
+        <button data-fly="dublin" aria-pressed="true">Dublin</button>
+        <button data-fly="cumbernauld" aria-pressed="false">Cumbernauld</button>
+        <span style="flex:1"></span>
+        <b>Filter</b>
+        <button data-grp="all" aria-pressed="true">All</button>
+        <button data-grp="thomas" aria-pressed="false">Thomas &amp; Anne</button>
+        <button data-grp="william" aria-pressed="false">William &amp; Martha</button>
+        <button data-grp="kavanagh" aria-pressed="false">Kavanaghs</button>
+        <button data-grp="churches" aria-pressed="false">Churches</button>
+      </div>
+      <div id="map"></div>
+      <div class="maplegend" id="maplegend"></div>
+    </div>
+
+    <div id="mapfallback" style="margin-top:16px">
+      <div class="card" style="padding:14px 16px;margin-bottom:14px;font-size:14.5px;color:var(--muted)">
+        The live map needs an internet connection and could not load, so here are the static maps instead. Every address in the tables below still links out to Street View.
+      </div>
+      <div class="grid g2">
+        <figure class="card" style="padding:14px">
+          <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
+          <figcaption><b>The addresses, plotted.</b> The Valentines and Kavanaghs rarely strayed more than a mile from the Pro-Cathedral.</figcaption>
+        </figure>
+        <figure class="card" style="padding:14px">
+          <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
+          <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901.</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <p class="small" style="color:var(--muted);margin-top:18px;max-width:700px">A note on precision: these are 1860s&ndash;1920s addresses, and Dublin has renamed, renumbered and demolished a great deal since. Pins are placed as accurately as the evidence allows &mdash; sometimes to the actual house, more often to the street &mdash; and each is labelled with what happened to it. <b>Site of</b> means the building is gone and the link shows you what stands there now.</p>
+  </div>
+
+  <div class="sect">
+    <h2>The addresses</h2>
+    <div id="placeroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>The churches</h2>
+    <div id="churchroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>Two other places worth knowing</h2>
+    <div id="landmarkroot"></div>
+  </div>
+
+  <div class="sect">
+    <h2>Your original maps</h2>
+    <div class="grid g2">
+      <figure class="card" style="padding:14px">
+        <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
+        <figcaption><b>The addresses, plotted.</b> The numbered pins from your spreadsheet.</figcaption>
+      </figure>
+      <figure class="card" style="padding:14px">
+        <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
+        <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901. The street ran between Henry Street and Parnell Street and was swallowed by the Ilac Centre in the 1970s &mdash; it no longer exists.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- RECORDS -->
+<section class="panel" id="p-records">
+  <div class="sect">
+    <h2>The original records</h2>
+    <p class="sub">Twenty-nine images from parish registers, civil registration returns and census forms. Click any image to enlarge.</p>
+    <div id="recroot"></div>
+  </div>
+</section>
+
+<!-- OPEN -->
+<section class="panel" id="p-open">
+  <div class="sect">
+    <h2>Open questions</h2>
+    <p class="sub">What is still unresolved, roughly in the order worth tackling — and, for each, the most promising next step.</p>
+    <div id="qroot"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>Compiled from the research spreadsheet <i>Valentine Dublin Research</i>. Sources: parish registers and civil registration returns via <a href="https://www.irishgenealogy.ie" target="_blank" rel="noopener">irishgenealogy.ie</a>; 1901 and 1911 census returns via the <a href="https://nationalarchives.ie/collections/search-the-census/" target="_blank" rel="noopener">National Archives of Ireland</a>.</p>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true"><div id="dcontent"></div></aside>
+<div class="lb" id="lb"><img alt=""><p></p></div>
+
+<!--__LEAFLET_JS__-->
+<script>
+/*__IMAGES__*/
+/*__DATA__*/
+
+/* ---------- images ---------- */
+function imgAttrs(k){
+  var d=(typeof IMGDIM!=='undefined')&&IMGDIM[k];
+  return 'src="'+IMG[k]+'"'+(d?' width="'+d[0]+'" height="'+d[1]+'"':'')+' loading="lazy" decoding="async"';
+}
+document.querySelectorAll('img[data-src]').forEach(function(im){
+  var k=im.dataset.src, d=(typeof IMGDIM!=='undefined')&&IMGDIM[k];
+  im.src=IMG[k]; im.loading='lazy'; im.decoding='async';
+  if(d){ im.width=d[0]; im.height=d[1]; }
+});
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('.navin button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.navin button').forEach(function(x){x.setAttribute('aria-selected','false');});
+    b.setAttribute('aria-selected','true');
+    document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('on');});
+    document.getElementById('p-'+b.dataset.t).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ---------- drawer ---------- */
+var scrim=document.getElementById('scrim'), drawer=document.getElementById('drawer'), dc=document.getElementById('dcontent');
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function openPerson(id){
+  var p=PEOPLE[id]; if(!p) return;
+  var h='<div class="dhead"><button class="dclose" aria-label="Close">&times;</button>'+
+    '<h3>'+p.name+'</h3><div class="role">'+(p.role?p.role+' · ':'')+(p.dates||'')+'</div>'+
+    '<div style="margin-top:11px"><span class="pill '+p.conf+'">'+p.conf+'</span></div></div><div class="dbody">';
+  if(p.summary) h+='<p class="dsum">'+p.summary+'</p>';
+  if(p.flags&&p.flags.length){h+='<h4>Where it is uncertain</h4>';
+    p.flags.forEach(function(f){h+='<div class="flagbox '+f[0]+'"><span>&#9888;</span><span>'+f[1]+'</span></div>';});}
+  if(p.facts&&p.facts.length){h+='<h4>The record</h4><table class="facts">';
+    p.facts.forEach(function(f){h+='<tr><td>'+f[0]+'</td><td>'+f[1]+'</td></tr>';});h+='</table>';}
+  if(p.notes&&p.notes.length){h+='<h4>Notes</h4>';
+    p.notes.forEach(function(n){h+='<div class="note">'+n+'</div>';});}
+  if(p.sources&&p.sources.length){h+='<h4>Sources</h4><ul class="srcs">';
+    p.sources.forEach(function(s){h+='<li><a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></li>';});h+='</ul>';}
+  h+='</div>';
+  dc.innerHTML=h;
+  dc.querySelector('.dclose').addEventListener('click',closeDrawer);
+  drawer.classList.add('on'); scrim.classList.add('on'); drawer.scrollTop=0;
+}
+function closeDrawer(){drawer.classList.remove('on');scrim.classList.remove('on');}
+scrim.addEventListener('click',closeDrawer);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeDrawer();document.getElementById('lb').classList.remove('on');}});
+
+/* ---------- tree ---------- */
+function node(id){
+  var p=PEOPLE[id];
+  return '<button class="pnode" data-p="'+id+'"><span class="nm"><span class="dot '+p.conf+'"></span>'+p.name+'</span>'+
+    '<span class="mt">'+[p.role,p.dates].filter(Boolean).join(' · ')+'</span></button>';
+}
+function couple(a,b,label,marr,hl){
+  return '<div class="couple'+(hl?' hl':'')+'"><div class="cl">'+label+'</div>'+node(a)+
+    (marr?'<div class="mline">'+marr+'</div>':'')+node(b)+'</div>';
+}
+var DIED_YOUNG={v3:1,v8:1,v9:1,k1:1,t2:1};
+function kid(id){
+  var p=PEOPLE[id];
+  var cls='kid'+(DIED_YOUNG[id]?' died':'')+(p.star?' main':'');
+  return '<button class="'+cls+'" data-p="'+id+'"><span class="nm"><span class="dot '+p.conf+'"></span>'+
+    p.name.replace(' Valentine','').replace(' Kavanagh','')+'</span><span class="mt">'+(p.dates||'')+'</span></button>';
+}
+var T='';
+T+='<div class="tier"><div class="tier-label">The oldest known generation</div><div class="couples">'+
+  couple('wv_sr','el_sr','Valentine','93 Marlboro Street')+
+  couple('pm_sr','cm_sr','Mackey','18 Greenville Street')+
+  couple('jk_sr','mk_sr','Kavanagh','37 Jervis Street')+
+  couple('pw_sr','aw_sr','Walsh','31 Jervis Street')+
+  '</div></div><div class="drop"></div>';
+
+T+='<div class="tier"><div class="tier-label">Their children marry — 1863 and 1873</div>'+
+  '<div class="couples" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">'+
+  couple('WV','MM','Married 3 August 1863','St Mary’s Pro-Cathedral · he about 21, she 17',true)+
+  couple('JK','AWm','Married 4 August 1873','St Mary’s Pro-Cathedral · he 26 and a widower, she 16',true)+
+  '</div></div><div class="drop"></div>';
+
+T+='<div class="tier"><div class="tier-label">Eleven Valentine children · 1864 – 1890</div><div class="kids">'+
+  ['v1','v2','v3','v4','v5','v6','v7','v8','v9','v10','v11'].map(kid).join('')+'</div></div>';
+T+='<div style="height:22px"></div>';
+T+='<div class="tier"><div class="tier-label">Four Kavanagh children · 1880 – 1887</div><div class="kids">'+
+  ['k1','k2','k3','k4'].map(kid).join('')+'</div></div><div class="drop thick"></div>';
+
+T+='<div class="tier"><div class="joinbar"><div class="cl">The two families join · 5 August 1900</div>'+
+  node('v7')+'<div class="mline">Married at St Mary’s Pro-Cathedral · he 19, she 18</div>'+node('k2')+
+  '</div></div><div class="drop thick"></div>';
+
+T+='<div class="tier"><div class="tier-label">Their thirteen children · 1900 – 1920</div><div class="kids">'+
+  ['t1','t2','t3','t4','t5','t6','t7','t8','t9','t10','t11'].map(kid).join('')+'</div>'+
+  '<div class="scotband">Born in Scotland</div><div class="kids">'+
+  ['t12','t13'].map(kid).join('')+'</div></div>';
+
+document.getElementById('treeroot').innerHTML=T;
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-p]'); if(b) openPerson(b.dataset.p);
+});
+
+/* ---------- timeline ---------- */
+document.getElementById('tlroot').innerHTML=TIMELINE.map(function(t){
+  return '<div class="tlitem'+(t.key?' major':'')+'"><div class="tly">'+t.y+'</div>'+
+    '<div class="tlt">'+t.t+(t.tag!=='confirmed'?' <span class="pill '+t.tag+'">'+t.tag+'</span>':'')+'</div>'+
+    '<div class="tld">'+t.d+'</div></div>';
+}).join('');
+
+/* ---------- places ---------- */
+var GMAPS='https://www.google.com/maps/';
+function svLink(lat,lng){return GMAPS+'@?api=1&map_action=pano&viewpoint='+lat+','+lng;}
+function pinLink(lat,lng){return GMAPS+'search/?api=1&query='+lat+','+lng;}
+function nameLink(q){return GMAPS+'search/?api=1&query='+encodeURIComponent(q);}
+var STATUS={extant:'Still there',renamed:'Renamed',demolished:'Site of',uncertain:'Uncertain'};
+
+/* one link per address: Street View where the fix is good, a Maps pin where it is not */
+function addrLink(r){
+  var lat=r[3],lng=r[4],st=r[5],prec=r[6],conf=r[7];
+  if(r[8]) return {href:r[8], label:'Street View'};   /* hand-picked view */
+  if(lat==null) return {href:nameLink(r[1]+', Dublin, Ireland'), label:'Find on Maps'};
+  if(conf==='high'||conf==='med') return {href:svLink(lat,lng), label:st==='demolished'?'Street View of the site':'Street View'};
+  return {href:pinLink(lat,lng), label:'Show on Maps'};
+}
+
+/* ---------- live map ---------- */
+var GRP={
+  thomas:{label:'Thomas &amp; Anne',color:'#8c5a2b'},
+  william:{label:'William &amp; Martha',color:'#3f6b57'},
+  kavanagh:{label:'James &amp; Anne Kavanagh',color:'#5a4a7a'},
+  other:{label:'Other addresses',color:'#8a6f4a'},
+  churches:{label:'Churches',color:'#2f6b6b'},
+  landmarks:{label:'Landmarks',color:'#94693f'}
+};
+document.getElementById('maplegend').innerHTML=Object.keys(GRP).map(function(k){
+  return '<span><i style="background:'+GRP[k].color+'"></i>'+GRP[k].label+'</span>';
+}).join('')+'<span style="color:var(--faint)"><i style="background:#fff;border-style:dashed;border-color:#9a3f3f"></i>dashed = building gone</span>';
+
+var MAPPTS=[], PINNO={};
+function seen(lat,lng){ /* nudge exact duplicates apart so both stay clickable */
+  var k=lat.toFixed(5)+','+lng.toFixed(5);
+  seen.c=seen.c||{}; seen.c[k]=(seen.c[k]||0)+1;
+  var n=seen.c[k]-1;
+  return n? [lat+n*0.00013, lng+n*0.00020] : [lat,lng];
+}
+Object.keys(PLACES).forEach(function(k){
+  PLACES[k].rows.forEach(function(r,i){
+    if(r[3]==null) return;
+    var xy=seen(r[3],r[4]);
+    MAPPTS.push({grp:k,yr:r[0],name:r[1],note:r[2],lat:xy[0],lng:xy[1],st:r[5],conf:r[7],sv:r[8]});
+    PINNO[k+'|'+i]=MAPPTS.length;
+  });
+});
+CHURCHES.forEach(function(c,i){MAPPTS.push({grp:'churches',yr:'Church',name:c[0]+', '+c[1],note:c[2],lat:c[3],lng:c[4],st:'extant',conf:'high'});PINNO['churches|'+i]=MAPPTS.length;});
+LANDMARKS.forEach(function(c,i){MAPPTS.push({grp:'landmarks',yr:'Landmark',name:c[0]+', '+c[1],note:c[2],lat:c[3],lng:c[4],st:'extant',conf:'high'});PINNO['landmarks|'+i]=MAPPTS.length;});
+
+function pinCell(grp,i,color,dem){
+  var n=PINNO[grp+'|'+i];
+  if(!n) return '<td class="pin"><button class="pinbtn" disabled title="No coordinate established">?</button></td>';
+  return '<td class="pin"><button class="pinbtn'+(dem?' dem':'')+'" data-pin="'+n+'" style="background:'+color+'" title="Show number '+n+' on the map">'+n+'</button></td>';
+}
+function addrTable(grp,color,rows){
+  return '<table class="addr">'+rows.map(function(r,i){
+    var L=addrLink(r), st=r[5];
+    return '<tr>'+pinCell(grp,i,color,st==='demolished')+'<td class="yr">'+r[0]+'</td><td class="ad">'+r[1]+
+      '<span class="stat st-'+st+'">'+STATUS[st]+'</span></td><td class="nt">'+r[2]+
+      '</td><td class="act"><a class="svlink" href="'+L.href+'" target="_blank" rel="noopener">'+L.label+' &rarr;</a></td></tr>';
+  }).join('')+'</table>';
+}
+document.getElementById('placeroot').innerHTML=Object.keys(PLACES).map(function(k){
+  var p=PLACES[k];
+  return '<div class="card plcard"><h3><i style="background:'+p.color+'"></i>'+p.label+'</h3>'+
+    (p.sub?'<p style="margin:-6px 0 12px;color:var(--muted);font-size:14px">'+p.sub+'</p>':'')+
+    addrTable(k,p.color,p.rows)+'</div>';
+}).join('');
+document.getElementById('churchroot').innerHTML='<div class="card plcard"><table class="addr">'+
+  CHURCHES.map(function(c,i){
+    return '<tr>'+pinCell('churches',i,'#2f6b6b',false)+'<td class="yr" style="width:150px">'+c[1]+'</td><td class="ad">'+c[0]+'</td><td class="nt">'+c[2]+'</td>'+
+      '<td class="act"><a class="svlink" href="'+svLink(c[3],c[4])+'" target="_blank" rel="noopener">Street View &rarr;</a></td></tr>';
+  }).join('')+'</table></div>';
+document.getElementById('landmarkroot').innerHTML='<div class="card plcard"><table class="addr">'+
+  LANDMARKS.map(function(c,i){
+    return '<tr>'+pinCell('landmarks',i,'#94693f',false)+'<td class="yr" style="width:150px">'+c[1]+'</td><td class="ad">'+c[0]+'</td><td class="nt">'+c[2]+'</td>'+
+      '<td class="act"><a class="svlink" href="'+svLink(c[3],c[4])+'" target="_blank" rel="noopener">Street View &rarr;</a></td></tr>';
+  }).join('')+'</table></div>';
+
+/* clicking a number in a table flies the map to that pin and opens it */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.pinbtn[data-pin]'); if(!b) return;
+  if(!mapReady) buildMap();
+  if(!theMap) return;
+  var m=MK[+b.dataset.pin-1]; if(!m) return;
+  document.querySelectorAll('.mapbar button[data-grp]').forEach(function(x){x.setAttribute('aria-pressed', x.dataset.grp==='all'?'true':'false');});
+  MK.forEach(function(x){x.addTo(theMap);});
+  document.getElementById('mapwrap').scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(function(){ theMap.invalidateSize(); theMap.setView(m.getLatLng(),17); m.openPopup(); },420);
+});
+
+var mapReady=false, MK=[], theMap=null, tilesOK=0, tileErr=0, gaveUp=false;
+function showFallback(){
+  if(gaveUp) return; gaveUp=true;
+  var w=document.getElementById('mapwrap'); if(w) w.style.display='none';
+  var f=document.getElementById('mapfallback'); if(f) f.style.display='block';
+}
+function buildMap(){
+  if(mapReady) return false;
+  if(typeof L==='undefined'){ showFallback(); return false; }
+  try{
+    theMap=L.map('map',{scrollWheelZoom:false}).setView([53.3535,-6.2650],14);
+    var tl=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+      maxZoom:19, subdomains:'abcd',
+      attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(theMap);
+    tl.on('tileload',function(){tilesOK++;});
+    tl.on('tileerror',function(){ tileErr++; if(tileErr>3 && tilesOK===0) showFallback(); });
+    var n=0;
+    MAPPTS.forEach(function(p){
+      n++;
+      var col=GRP[p.grp].color;
+      var ic=L.divIcon({className:'pinlbl',iconSize:[22,22],iconAnchor:[11,11],
+        html:'<div class="'+(p.st==='demolished'?'dem':'')+'" style="background:'+col+'">'+n+'</div>'});
+      var href = p.sv ? p.sv : ((p.conf==='high'||p.conf==='med') ? svLink(p.lat,p.lng) : pinLink(p.lat,p.lng));
+      var link = '<a href="'+href+'" target="_blank" rel="noopener">'+
+        (p.sv||p.conf==='high'||p.conf==='med' ? 'Open Street View' : 'Open in Maps')+' &rarr;</a>';
+      var m=L.marker([p.lat,p.lng],{icon:ic}).addTo(theMap)
+        .bindPopup('<span class="yr">'+p.yr+' &middot; '+STATUS[p.st]+'</span><b>'+p.name+'</b><p>'+p.note+'</p>'+link);
+      m._grp=p.grp; MK.push(m);
+    });
+    mapReady=true;
+    setTimeout(function(){theMap.invalidateSize();},60);
+    setTimeout(function(){ if(tilesOK===0) showFallback(); },6000);
+    return true;
+  }catch(e){ showFallback(); return false; }
+}
+document.querySelector('.navin button[data-t=places]').addEventListener('click',function(){
+  if(!mapReady) buildMap();
+  else setTimeout(function(){theMap.invalidateSize();},80);
+});
+document.querySelectorAll('.mapbar button[data-fly]').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!theMap) return;
+    document.querySelectorAll('.mapbar button[data-fly]').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    if(b.dataset.fly==='dublin') theMap.setView([53.3535,-6.2650],14);
+    else theMap.setView([55.96284,-3.97499],17);
+  });
+});
+document.querySelectorAll('.mapbar button[data-grp]').forEach(function(b){
+  b.addEventListener('click',function(){
+    if(!theMap) return;
+    document.querySelectorAll('.mapbar button[data-grp]').forEach(function(x){x.setAttribute('aria-pressed','false');});
+    b.setAttribute('aria-pressed','true');
+    var g=b.dataset.grp, bounds=[];
+    MK.forEach(function(m){
+      var on = (g==='all'||m._grp===g);
+      if(on){ m.addTo(theMap); bounds.push(m.getLatLng()); } else { theMap.removeLayer(m); }
+    });
+    if(bounds.length) theMap.fitBounds(L.latLngBounds(bounds).pad(0.15),{maxZoom:16});
+  });
+});
+
+/* ---------- records ---------- */
+document.getElementById('recroot').innerHTML=RECORDS.map(function(g){
+  return '<div class="recgroup"><h3>'+g.title+'</h3><p>'+g.blurb+'</p>'+
+    g.items.map(function(it){
+      return '<div class="card rec"><h3>'+it.h+'</h3><div class="meta">'+it.m+'</div>'+
+        it.imgs.map(function(k){return '<img data-k="'+k+'" '+imgAttrs(k)+' alt="'+it.h+'">';}).join('')+
+        (it.cap?'<p style="margin:6px 0 0;font-size:14px;color:var(--muted)">'+it.cap+'</p>':'')+
+        (it.link?'<p style="margin:8px 0 0;font-size:13.5px"><a href="'+it.link+'" target="_blank" rel="noopener">View the source record &rarr;</a></p>':'')+
+        '</div>';
+    }).join('')+'</div>';
+}).join('');
+
+/* lightbox */
+var lb=document.getElementById('lb');
+document.addEventListener('click',function(e){
+  if(e.target.tagName==='IMG'&&e.target.dataset.k){
+    lb.querySelector('img').src=e.target.src;
+    lb.querySelector('p').textContent=e.target.alt;
+    lb.classList.add('on');
+  }else if(e.target.closest('.lb')){lb.classList.remove('on');}
+});
+
+/* ---------- questions ---------- */
+document.getElementById('qroot').innerHTML=QUESTIONS.map(function(q,i){
+  var lbl=q.p===1?'Highest value':(q.p===2?'Worth chasing':'Loose end');
+  return '<div class="card q"><div class="qh"><div class="qn">'+(i+1)+'</div><div style="flex:1">'+
+    '<h3>'+q.q+'</h3></div><span class="prio">'+lbl+'</span></div>'+
+    '<p>'+q.d+'</p><div class="next"><b>Next step</b>'+q.n+'</div></div>';
+}).join('');
+</script>
+</body>
+</html>
