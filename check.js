@@ -98,10 +98,10 @@ D.RECORDS.forEach((grp) => {
     });
   });
 });
-// the two static maps are referenced from the markup rather than the records list
-['image28', 'image29'].forEach((k) => {
+// the historic street map is referenced from the markup rather than the records list
+['image28'].forEach((k) => {
   used.add(k);
-  if (!onDisk.has(k)) fail(`the Places fallback wants img/${k}.jpg, which is not there`);
+  if (!onDisk.has(k)) fail(`the Places section wants img/${k}.jpg, which is not there`);
 });
 [...onDisk].filter((k) => !used.has(k)).forEach((k) => fail(`img/${k}.jpg is never used — remove it or reference it`));
 ok(`${used.size} record images, all present and all used`);

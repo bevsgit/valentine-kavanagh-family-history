@@ -1,2 +1,5 @@
+# Crawling is allowed so that crawlers can read the noindex meta tag
+# in index.html, which is what keeps this site out of search results.
+# Do not change this to Disallow without reading the note in build.py.
 User-agent: *
-Disallow: /
+Allow: /

@@ -165,7 +165,25 @@ and CI problems, and everything git and deployment.
 Pushing to `main` triggers `.github/workflows/pages.yml`, which installs Leaflet,
 runs `build.py`, runs `check.js`, and publishes `site/`.
 
-The site is live but `NOINDEX = True` in `build.py` — a `robots.txt` disallow and
-a `noindex` meta tag. The repo is public because free-tier GitHub Pages requires
-it. Do not flip `NOINDEX` without asking; it is a privacy decision about a family,
-not a config value.
+The site is live but `NOINDEX = True` in `build.py`. The repo is public because
+free-tier GitHub Pages requires it. Do not flip `NOINDEX` without asking; it is a
+privacy decision about a family, not a config value.
+
+**The `<meta name="robots" content="noindex">` tag is what keeps this out of
+search results — not `robots.txt`.** Two reasons, both easy to get wrong:
+
+1. `robots.txt` is only honoured at the *host root*. This is a project site at
+   `bevsgit.github.io/valentine-kavanagh-family-history/`, so the file we publish
+   sits at a subpath and crawlers ignore it entirely.
+2. Even where it is honoured, `Disallow` blocks *crawling*, not *indexing*. A
+   crawler that is not allowed to fetch the page never reads the noindex tag, and
+   a blocked URL can still be indexed from an external link. So `Disallow` plus
+   `noindex` is worse than `noindex` alone.
+
+`robots.txt` therefore says `Allow: /` on purpose. Do not "fix" it to `Disallow`.
+This becomes live rather than theoretical the moment a custom domain is added, at
+which point the file *would* start being honoured.
+
+`SITE_URL` in `build.py` must be kept correct: Open Graph requires absolute URLs,
+and a relative `og:image` is silently ignored, which breaks link previews. If the
+site moves to a custom domain, update `SITE_URL` in the same commit.

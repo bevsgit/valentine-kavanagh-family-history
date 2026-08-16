@@ -198,6 +198,21 @@ table.addr td.pin{width:1%;padding-right:12px;vertical-align:top;padding-top:10p
 .st-demolished{color:#9a3f3f;border-color:rgba(154,63,63,.3);background:rgba(154,63,63,.06)}
 .st-uncertain{color:#a3711b;border-color:rgba(163,113,27,.3);background:rgba(163,113,27,.07)}
 
+/* justified setting on the story page. Hyphenation is on because justifying
+   without it opens rivers of white space; below 700px the measure is too
+   narrow for justification to look like anything but a mess, so it reverts. */
+#p-story .lede p,
+#p-story .card > p{
+  text-align:justify;
+  text-justify:inter-word;
+  -webkit-hyphens:auto; hyphens:auto;
+  hyphenate-limit-chars:6 3 3;
+}
+@media(max-width:700px){
+  #p-story .lede p,
+  #p-story .card > p{text-align:left;-webkit-hyphens:manual;hyphens:manual}
+}
+
 figure{margin:0}
 figure img{width:100%;display:block;border-radius:10px;border:1px solid var(--rule);background:#fff}
 figcaption{font-size:13px;color:var(--muted);margin-top:9px}
@@ -257,12 +272,12 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
   <div class="wrap">
     <div class="eyebrow">Dublin &amp; Cumbernauld · 1842 – 1958</div>
     <h1>The <em>Valentines</em> and the <em>Kavanaghs</em></h1>
-    <p class="dek">Four generations of bookbinders, coachmen and cloakmakers on the north side of Dublin — the marriage, in August 1900, that brought the two families together, and the crossing to Scotland that ended the trade.</p>
+    <p class="dek">My family on the north side of Dublin. Four generations of bookbinders, coachmen and cloakmakers, the marriage in 1900 that joined the two sides, and the crossing to Scotland that ended the trade.</p>
     <div class="hstats">
       <div class="hstat"><b>40</b><span>People</span></div>
       <div class="hstat"><b>4</b><span>Generations</span></div>
-      <div class="hstat"><b>32</b><span>Record images</span></div>
-      <div class="hstat"><b>18</b><span>Open questions</span></div>
+      <div class="hstat"><b>31</b><span>Record images</span></div>
+      <div class="hstat"><b>17</b><span>Open questions</span></div>
     </div>
   </div>
 </header>
@@ -284,9 +299,10 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
 <section class="panel on" id="p-story">
   <div class="sect">
     <div class="lede">
-      <p>On 3 August 1863, in St Mary's Pro-Cathedral on Marlborough Street, a twenty-one-year-old bookbinder named William Valentine married a seventeen-year-old bookfolder named Martha Mackey. She was still legally a minor. He was the son of a railway clerk; she was the daughter of a coach maker. Both of them worked in the book trade, and both of them would stay in it for the rest of their lives.</p>
-      <p>Ten years later, almost to the day, a widowed railway guard called James Kavanagh married sixteen-year-old Anne Walsh in the same church. Their fathers — a coachman and a carpenter — lived a few doors apart on Jervis Street, which is almost certainly how they met.</p>
-      <p>Those two marriages produced fifteen children between them. In August 1900, the seventh Valentine child married the second Kavanagh child, and the families became one. They had thirteen children of their own — eleven in Dublin, and then, some time between the Easter Rising and the War of Independence, they crossed to a village in Scotland and had two more.</p>
+      <p>My great-great-grandparents married on 3 August 1863, in the Pro-Cathedral on Marlborough Street. William Valentine was a bookbinder of about twenty-one. Martha Mackey was a bookfolder of seventeen, and still legally a minor. He was a railway clerk's son and she was a coach maker's daughter, and both of them worked on books for the rest of their lives.</p>
+      <p>Ten years later, almost to the day, James Kavanagh married Anne Walsh in the same church. He was a widowed railway guard of twenty-six. She was sixteen. Their fathers, a coachman and a carpenter, lived a few doors apart on Jervis Street - which is almost certainly how they met.</p>
+      <p>Between them those two marriages produced fifteen children. In August 1900 the seventh Valentine child married the second Kavanagh child. That couple, Thomas and Anne, are my great-grandparents. They had thirteen children of their own - eleven in Dublin, and then, we think in 1916 or 1917, they crossed to a village in Scotland and had two more. My grandfather Walter was the seventh of the thirteen, and about six when they went.</p>
+      <p>I put this together from parish registers, civil records and three census returns. What follows is what the documents actually say, and I have tried to be clear about where they stop.</p>
     </div>
   </div>
 
@@ -294,35 +310,39 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
     <h2>What the records show</h2>
     <div class="grid g2" style="margin-top:18px">
       <div class="card" style="padding:20px">
-        <h3 style="font-size:17px;margin-bottom:8px">A family of the book trade</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">William was a bookbinder; Martha a bookfolder; their daughters Elizabeth and Martha both bookfolders; their son Louis a compositor and later a linotype operator; their son Thomas a book finisher who rose to foreman. Four of the death certificates in this tree describe the deceased simply as a bookbinder's wife, a bookbinder's child, a bookbinder's son. It was not just a job — it was the family's identity in the eyes of the state. And then, in one census line, it stops.</p>
+        <h3 style="font-size:17px;margin-bottom:8px">Nearly everyone worked on books</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William bound them, Martha folded them, and so did both their daughters. Louis set type and later moved onto a linotype machine. Thomas finished bindings and made foreman. The death certificates are the thing that stays with me. Four of them don't give the person a trade of their own, just a bookbinder's wife, a bookbinder's child, a bookbinder's son. Then Thomas gets to Scotland and by 1921 he's a railway porter.</p>
       </div>
       <div class="card" style="padding:20px">
-        <h3 style="font-size:17px;margin-bottom:8px">A family that changed church</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">William was Church of Ireland, Martha Roman Catholic. Their first two children were baptised Catholic at the Pro-Cathedral. From 1871 every child was baptised at St George's, Church of Ireland. By 1901 Elizabeth is recorded as Wesleyan, Martha as Roman Catholic, and Thomas — baptised COI in 1881 — had married in the Pro-Cathedral as a Catholic. Denomination in this family bent to circumstance.</p>
+        <h3 style="font-size:17px;margin-bottom:8px">They moved between churches more than once</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">William was Church of Ireland and Martha was Roman Catholic. The first two children were baptised Catholic at the Pro-Cathedral. From 1871 every child was baptised at St George's, Church of Ireland. By the 1901 census Elizabeth is down as Wesleyan and her sister Martha as Roman Catholic, in the same house. Thomas was baptised Church of Ireland in 1881 and married in the Pro-Cathedral as a Catholic in 1900. I can't explain any of it from the records, but it clearly bent to circumstance.</p>
       </div>
       <div class="card" style="padding:20px">
-        <h3 style="font-size:17px;margin-bottom:8px">A family that buried its children</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">Of William and Martha's eleven children, four died before adulthood: William Thomas of meningitis at eight, Ruth Florence of diphtheria at two, Walter William of typhus at thirteen, and Mary — probably — of tuberculosis at nineteen. The Kavanaghs lost their firstborn, Patrick, at one month, of severe malnutrition. Thomas and Anne lost a son too: the 1911 census records seven children born and six living.</p>
+        <h3 style="font-size:17px;margin-bottom:8px">They buried a lot of children</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">Four of William and Martha's eleven died before they grew up. William Thomas of meningitis at eight. Ruth Florence of diphtheria at two. Walter William of typhus at thirteen. Mary probably of tuberculosis at nineteen, though I am not certain that record is hers. The Kavanaghs lost their first child, Patrick, at one month - the certificate says severe malnutrition. Thomas and Anne lost one too. The 1911 census records seven children born and six living, and the one missing is James.</p>
       </div>
       <div class="card" style="padding:20px;border-color:rgba(140,90,43,.4)">
-        <h3 style="font-size:17px;margin-bottom:8px">A family that gave up its trade</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">On 19 June 1921 the census finds them at the Wynd in Cumbernauld Village, Dunbartonshire: Thomas, Annie and twelve of their thirteen children — fourteen people in <b>two rooms</b>. Thomas, a foreman bookbinder finisher ten years earlier, is now a <b>railway porter</b> for the North British Railway Company. William and Thomas John are in the local brick and fireclay works; Martha is in a warehouse. Whatever took them across, it was not the book trade.</p>
+        <h3 style="font-size:17px;margin-bottom:8px">And then they gave the trade up</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">On 19 June 1921 the census finds them at the Wynd in Cumbernauld Village. Thomas, Annie and twelve of their thirteen children - fourteen people in <b>two rooms</b>. Ten years earlier Thomas was a foreman bookbinder finisher. Here he is a <b>railway porter</b> for the North British Railway Company. William and Thomas John are in the local brick and fireclay works and Martha is in a warehouse. Whatever took them across, it wasn't the book trade.</p>
+      </div>
+      <div class="card" style="padding:20px;border-color:rgba(63,107,87,.4)">
+        <h3 style="font-size:17px;margin-bottom:8px">Why I think they went</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">This part is my reading rather than the record. The value of what Thomas knew how to do had been falling away for his whole working life. Machines took the folding, the sewing, the casing-in and the blocking, and hand finishing shrank to a niche just as he reached the top of it. He was foreman of a trade that was going away, and there was no point carrying it to Scotland where the same machines were doing the same work. That is the push. The pull is that some of Anne's family had already made the move, and the understanding in the family is that they talked Thomas and Anne into following, on better prospects and better pay. Why he then went onto the railway I can't explain.</p>
       </div>
       <div class="card" style="padding:20px">
-        <h3 style="font-size:17px;margin-bottom:8px">A family always on the move</h3>
-        <p style="margin:0;color:var(--muted);font-size:15px">More than twenty different addresses appear across these records, nearly all of them within a mile of the Pro-Cathedral. Thomas and Anne alone lived at six Dublin addresses in sixteen years. The one period of stability is Portland Place, where William and Martha stayed for seventeen years and raised eight children. Then the family left Ireland altogether.</p>
+        <h3 style="font-size:17px;margin-bottom:8px">They moved constantly</h3>
+        <p style="margin:0;color:var(--muted);font-size:15px">More than twenty addresses turn up across these records and nearly all of them sit within a mile of the Pro-Cathedral. Thomas and Anne managed six Dublin addresses in sixteen years. The one settled stretch is Portland Place, where William and Martha stayed seventeen years and raised eight children. Several of these streets no longer exist - I have marked which on the map.</p>
       </div>
     </div>
   </div>
 
   <div class="sect">
     <h2>The bookbinder's trade</h2>
-    <p class="sub">Context for what William, Thomas and Louis actually did all day — and why the work changed under them.</p>
+    <p class="sub">What William, Thomas and Louis actually did all day, and why the work changed under them.</p>
     <div class="card" style="padding:22px">
-      <p style="margin-top:0;color:#3a3e44">A bookbinder took printed sheets from the printer and turned them into books: folding and collating the gatherings, sewing them on a frame, attaching boards, covering in cloth or leather, then finishing — lettering, gilding, tooling, trimming and polishing. William's title, <b>bookbinder</b>, covered the whole craft. Thomas's title, <b>book finisher</b>, was the skilled decorative end of it.</p>
-      <p style="color:#3a3e44">Between 1880 and 1920 that craft split in two. Folding machines, sewing machines, casing-in machines, mechanical blocking presses and guillotines arrived in the commercial binderies. Much of the work was deskilled, and women and children entered the trade in large numbers as factory hands — by 1900 women outnumbered men in many trade binderies. Fine hand binding survived as a prestigious but shrinking niche.</p>
-      <p style="margin-bottom:0;color:#3a3e44">That is the arc this family lived through. Martha and both her bookfolder daughters were part of the female influx. Louis moved from hand compositing to operating a linotype machine. And Thomas — a foreman bookbinder finisher by 1911 — held on to the skilled end just as it was contracting. One Dublin firm of the period, <b>Galwey &amp; Co.</b> of 22 Eustace Street, was substantial enough to take on institutional work of the first rank — your notes credit it with a rebinding of the Book of Kells in 1895, though that particular attribution is not one I have been able to corroborate against the standard published accounts of the manuscript's binding history, which name 1826, an 1874 London rebinding, and Roger Powell's in 1953. The firm and its premises are well documented; the 1895 job would need Trinity's own binding records to settle.</p>
+      <p style="margin-top:0;color:#3a3e44">A bookbinder took printed sheets from the printer and turned them into books. Folding and collating the gatherings, sewing them on a frame, attaching boards, covering in cloth or leather, then finishing: lettering, gilding, tooling, trimming, polishing. William's title, <b>bookbinder</b>, covered the whole craft. Thomas's title, <b>book finisher</b>, was the skilled decorative end of it.</p>
+      <p style="color:#3a3e44">Between 1880 and 1920 that craft split in two. Folding machines, sewing machines, casing-in machines, mechanical blocking presses and guillotines all arrived in the commercial binderies. Much of the work was deskilled. Women and children came into the trade in large numbers as factory hands, and by 1900 women outnumbered men in many binderies. Fine hand binding survived, but as a shrinking niche.</p>
+      <p style="margin-bottom:0;color:#3a3e44">That is the arc my family lived through. Martha and both her bookfolder daughters were part of the female influx. Louis went from hand compositing to running a linotype machine. Thomas held on to the skilled end, and made foreman by 1911, just as that end was contracting. One Dublin firm of the period, <b>Galwey &amp; Co.</b> of 22 Eustace Street, was big enough to take on institutional work of the first rank. My notes credit it with rebinding the Book of Kells in 1895. I have not been able to corroborate that against the standard accounts, which name 1826, an 1874 London rebinding and Roger Powell's in 1953. The firm and the premises are well documented. The 1895 job would need Trinity's own binding records to settle.</p>
     </div>
   </div>
 
@@ -333,7 +353,7 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
       <div><span class="pill probable">Probable</span> Identified, but at least one record carries a discrepancy.</div>
       <div><span class="pill unresolved">Unresolved</span> The trail goes cold: a record could not be found, or there are too many candidates.</div>
     </div>
-    <p class="small" style="color:var(--muted);max-width:660px">Every name in the family tree is clickable and opens the full detail — dates, addresses, occupations, the reasoning behind each identification, and links to the original records on irishgenealogy.ie and the National Archives of Ireland.</p>
+    <p class="small" style="color:var(--muted);max-width:660px">Every name in the tree is clickable and opens the detail: dates, addresses, occupations, why I think each identification holds, and links to the original records on irishgenealogy.ie and the National Archives of Ireland.</p>
   </div>
 </section>
 
@@ -341,7 +361,7 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
 <section class="panel" id="p-tree">
   <div class="sect">
     <h2>The family tree</h2>
-    <p class="sub">Click any name for the full record. The coloured dot shows the <i>weakest</i> link in that person’s record, not the strongest — William Valentine is the best-documented man here and still shows red, because his birth has never been found. Hatched boxes mark children who died young.</p>
+    <p class="sub">Click any name for the full record. The coloured dot shows the <i>weakest</i> link in that person’s record rather than the strongest, so William Valentine is the best-documented man here and still shows red, because I have never found his birth. Hatched boxes are children who died young.</p>
     <div id="treeroot"></div>
   </div>
 </section>
@@ -359,7 +379,7 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
 <section class="panel" id="p-places">
   <div class="sect">
     <h2>Where they lived</h2>
-    <p class="sub">Almost the whole of this story takes place in a small patch of north inner-city Dublin, between the Pro-Cathedral, the quays and Ballybough — and then, abruptly, in a village in Dunbartonshire. Every address below is clickable.</p>
+    <p class="sub">Nearly all of this happens in a small patch of north inner-city Dublin, between the Pro-Cathedral, the quays and Ballybough. Then, abruptly, a village in Dunbartonshire. Every address below is clickable.</p>
 
     <div id="mapwrap">
       <div class="mapbar">
@@ -380,18 +400,12 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
 
     <div id="mapfallback" style="margin-top:16px">
       <div class="card" style="padding:14px 16px;margin-bottom:14px;font-size:14.5px;color:var(--muted)">
-        The live map needs an internet connection and could not load, so here are the static maps instead. Every address in the tables below still links out to Street View.
+        The live map needs an internet connection and couldn't load. Every address in the tables below still links straight out to Street View.
       </div>
-      <div class="grid g2">
-        <figure class="card" style="padding:14px">
-          <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
-          <figcaption><b>The addresses, plotted.</b> The Valentines and Kavanaghs rarely strayed more than a mile from the Pro-Cathedral.</figcaption>
-        </figure>
-        <figure class="card" style="padding:14px">
-          <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
-          <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901.</figcaption>
-        </figure>
-      </div>
+      <figure class="card" style="padding:14px;max-width:640px">
+        <img data-src="image28" alt="Ordnance Survey map showing Little Denmark Street before it was demolished">
+        <figcaption><b>Little Denmark Street.</b> Where the Kavanaghs were living in 1901, on a survey made while the street still existed.</figcaption>
+      </figure>
     </div>
 
     <p class="small" style="color:var(--muted);margin-top:18px;max-width:700px">A note on precision: these are 1860s&ndash;1920s addresses, and Dublin has renamed, renumbered and demolished a great deal since. Pins are placed as accurately as the evidence allows &mdash; sometimes to the actual house, more often to the street &mdash; and each is labelled with what happened to it. <b>Site of</b> means the building is gone and the link shows you what stands there now.</p>
@@ -408,22 +422,17 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
   </div>
 
   <div class="sect">
-    <h2>Two other places worth knowing</h2>
+    <h2>Two other places that matter</h2>
     <div id="landmarkroot"></div>
   </div>
 
   <div class="sect">
-    <h2>Your original maps</h2>
-    <div class="grid g2">
-      <figure class="card" style="padding:14px">
-        <img data-src="image29" alt="Modern map of Dublin with family addresses marked">
-        <figcaption><b>The addresses, plotted.</b> The numbered pins from your spreadsheet.</figcaption>
-      </figure>
-      <figure class="card" style="padding:14px">
-        <img data-src="image28" alt="Historic Ordnance Survey map of the Little Denmark Street area">
-        <figcaption><b>Little Denmark Street.</b> The Kavanagh household in 1901. The street ran between Henry Street and Parnell Street and was swallowed by the Ilac Centre in the 1970s &mdash; it no longer exists.</figcaption>
-      </figure>
-    </div>
+    <h2>The street as it was</h2>
+    <p class="sub">The only map worth keeping alongside the live one, because it shows a layout that has since been erased.</p>
+    <figure class="card" style="padding:14px;max-width:760px">
+      <img data-src="image28" alt="Ordnance Survey map showing Little Denmark Street before it was demolished">
+      <figcaption><b>Little Denmark Street, before the Ilac Centre.</b> The Kavanaghs were at number 30 in 1901. The street ran north from Henry Street to what was then Great Britain Street, and it was erased along with Cole's Lane, Riddall's Row and a dozen other lanes when the shopping centre went up in 1976&ndash;78. Nothing on a modern map shows you this.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -440,7 +449,7 @@ footer{border-top:1px solid var(--rule);padding:26px 0 40px;color:var(--faint);f
 <section class="panel" id="p-open">
   <div class="sect">
     <h2>Open questions</h2>
-    <p class="sub">What is still unresolved, roughly in the order worth tackling — and, for each, the most promising next step.</p>
+    <p class="sub">What I still can’t answer, roughly in the order worth tackling, with the next step for each.</p>
     <div id="qroot"></div>
   </div>
 </section>
@@ -533,7 +542,7 @@ T+='<div class="tier"><div class="tier-label">The oldest known generation</div><
   couple('pw_sr','aw_sr','Walsh','31 Jervis Street')+
   '</div></div><div class="drop"></div>';
 
-T+='<div class="tier"><div class="tier-label">Their children marry — 1863 and 1873</div>'+
+T+='<div class="tier"><div class="tier-label">Their children marry · 1863 and 1873</div>'+
   '<div class="couples" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">'+
   couple('WV','MM','Married 3 August 1863','St Mary’s Pro-Cathedral · he about 21, she 17',true)+
   couple('JK','AWm','Married 4 August 1873','St Mary’s Pro-Cathedral · he 26 and a widower, she 16',true)+

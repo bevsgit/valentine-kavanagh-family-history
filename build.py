@@ -28,8 +28,13 @@ DIST = "dist"
 RECORDS_DIR = os.path.join(SITE, "assets", "records")
 LIB_DIR = os.path.join(SITE, "assets", "lib")
 
-# Live but not indexed: search engines are asked to stay away.
-# Flip NOINDEX to False if you ever want other researchers to find this.
+# Where the site is published. Needed because Open Graph requires ABSOLUTE
+# URLs — a relative og:image is silently ignored, and link previews break.
+SITE_URL = "https://bevsgit.github.io/valentine-kavanagh-family-history/"
+
+# Live but not indexed. Flip to False if you ever want other researchers to
+# find this. See the note in meta_block() about why robots.txt is not the
+# mechanism doing the work here.
 NOINDEX = True
 SITE_TITLE = "The Valentine & Kavanagh Families of Dublin & Cumbernauld"
 SITE_DESC = ("Four generations of a Dublin bookbinding family, 1842-1958 - a clickable family tree, "
@@ -74,13 +79,19 @@ def meta_block(for_site):
     m = ['<meta name="description" content="%s">' % SITE_DESC]
     if for_site:
         if NOINDEX:
+            # This tag, not robots.txt, is what keeps the site out of search
+            # results. robots.txt is only honoured at the host root, and this
+            # is a project site served from a subdirectory.
             m.append('<meta name="robots" content="noindex, nofollow, noarchive">')
+        base = SITE_URL if SITE_URL.endswith("/") else SITE_URL + "/"
         m += [
             '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">',
+            '<link rel="canonical" href="%s">' % base,
             '<meta property="og:type" content="website">',
+            '<meta property="og:url" content="%s">' % base,
             '<meta property="og:title" content="%s">' % SITE_TITLE,
             '<meta property="og:description" content="%s">' % SITE_DESC,
-            '<meta property="og:image" content="assets/social.jpg">',
+            '<meta property="og:image" content="%sassets/social.jpg">' % base,
             '<meta name="twitter:card" content="summary_large_image">',
         ]
     return "\n".join(m)
@@ -125,8 +136,15 @@ def main():
     site_html = build(src, for_site=True)
     open(os.path.join(SITE, "index.html"), "w", encoding="utf-8", newline="\n").write(site_html)
 
+    # Deliberately Allow, even when NOINDEX is on. "Disallow" stops crawlers
+    # FETCHING the page, which means they never read the noindex tag — and a
+    # blocked URL can still be indexed from an external link. Letting them in
+    # to read the noindex is what actually guarantees exclusion.
     open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8", newline="\n").write(
-        "User-agent: *\nDisallow: /\n" if NOINDEX else "User-agent: *\nAllow: /\n")
+        "# Crawling is allowed so that crawlers can read the noindex meta tag\n"
+        "# in index.html, which is what keeps this site out of search results.\n"
+        "# Do not change this to Disallow without reading the note in build.py.\n"
+        "User-agent: *\nAllow: /\n")
     # stops GitHub Pages running the files through Jekyll
     open(os.path.join(SITE, ".nojekyll"), "w").close()
 
